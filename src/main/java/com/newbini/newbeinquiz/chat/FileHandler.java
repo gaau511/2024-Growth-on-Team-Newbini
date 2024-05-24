@@ -93,7 +93,8 @@ public class FileHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         FileAttachResponse fileAttachResponse = objectMapper.readValue(jsonResponse, FileAttachResponse.class);
 
-
+        file_id = fileAttachResponse.getId();
+        System.out.println("file_id = " + file_id);
         return fileAttachResponse.getId();
     }
 
