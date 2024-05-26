@@ -103,7 +103,7 @@ public class MessageGenerator {
     }
 
     public MessageObject createMessage(String thread_id) throws JsonProcessingException {
-        String content = "주어진 강의 자료를 기반으로 퀴즈를 생성하며, 학생들이 강의 내용을 이해하고 기억하는 데 도움이 되는 다양한 유형의 퀴즈를 제작해 주세요. 퀴즈 생성 과정에서는 문항 유형, 난이도, 과목 등을 고려하여 효율적이고 유용하며 다양한 퀴즈를 만들어냅니다.";
+        String content = "주어진 강의 자료를 기반으로 퀴즈를 생성해주세요. 학생들이 강의 내용을 이해하고 기억하는 데 도움이 되는 내용이어야 합니다. 퀴즈 생성 과정에서는 효율적이고 유용하며 다양한 퀴즈를 만들어냅니다. 절대 실수하지 않습니다.";
         String url = "https://api.openai.com/v1/threads/" + thread_id + "/messages";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -124,6 +124,7 @@ public class MessageGenerator {
         requestBody.put("attachments", Collections.singletonList(attachment));
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        System.out.println("requestEntity = " + requestEntity);
         String response = restTemplate.postForObject(url, requestEntity, String.class);
         MessageObject message = objectMapper.readValue(response, MessageObject.class);
         message_id = message.getId();

@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <style>
+        .question-container {
+        padding: 10px;
+        border: 5px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .ox-question span,
+    .mcq-question span,
+    .subjective-question span {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .ox-question input[type="radio"] {
+        margin-right: 5px;
+    }
+
+    .mcq-question label {
+        margin-left: 5px;
+    }
+
+    .subjective-question input[type="text"] {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+<body>
+<div th:each="question, iter : ${quiz.questions}" th:with="qNum=${iter.index+1}" class="question-container">
+    <div th:if="${question.type == 'O/X'}" class="ox-question">
+        <span th:text="|Q${qNum}. ${question.question}|">(O/X 질문)</span>
+        <div>
+            <input type="radio" name="q${qNum}" value="true" /> O
+            <input type="radio" name="q${qNum}" value="false" /> X
+        </div>
+    </div>
+    <div th:if="${question.type == '객관식'}" class="mcq-question">
+        <span th:text="|Q${qNum}. ${question.question}|">(객관식 질문)</span>
+        <div th:each="option, optIter : ${question.options}">
+            <input type="radio" th:id="|q${qNum}_opt${optIter.index}|" th:name="|q${qNum}|" th:value="${option}">
+            <label th:for="|q${qNum}_opt${optIter.index}|" th:text="${option}">(옵션)</label>
+        </div>
+    </div>
+    <div th:if="${question.type == '주관식'}" class="subjective-question">
+        <span th:text="|Q${qNum}. ${question.question}|">(주관식 질문)</span>
+        <input type="text" th:name="|q${qNum}|" placeholder="주관식 답변" />
+    </div>
+</div></div>
+</body>
+</html>

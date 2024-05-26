@@ -31,9 +31,10 @@ public class ExecuteManager {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("assistant_id", assistant_id);
-        requestBody.put("stream", false);
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        System.out.println("requestEntity = " + requestEntity);
         ResponseEntity<RunObject> response = restTemplate.postForEntity(url, requestEntity, RunObject.class);
         RunObject runObject = response.getBody();
 

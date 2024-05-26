@@ -21,7 +21,7 @@ public class RunObject {
     private Long failed_at;
     private Long completed_at;
     private String required_action;
-    private String last_error;
+    private ErrorObject last_error;
     private String model;
     private String instructions;
     private List<Tool> tools;
@@ -46,5 +46,15 @@ public class RunObject {
     public static class TruncationStrategy {
         private String type;
         private List<String> last_messages;
+    }
+    @Data
+    private static class Format {
+        private String type;
+    }
+
+    @Data
+    private static class ErrorObject {
+        private String code;
+        private String message;
     }
 }

@@ -3,6 +3,7 @@ package com.newbini.newbeinquiz.chat;
 import com.newbini.newbeinquiz.web.response.AssistantObject;
 import com.newbini.newbeinquiz.web.response.MessageObject;
 import com.newbini.newbeinquiz.web.response.ThreadObject;
+import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -20,8 +21,8 @@ class ExecuteManagerTest {
     }
 
     @Test
-    void run() throws IOException, InterruptedException {
-        AssistantObject assistant = assistantGenerator.createAssistant();
+    void run() throws IOException, InterruptedException, ParseException {
+        AssistantObject assistant = assistantGenerator.createAssistant("객관식","보통");
         String assistant_id = assistant.getId();
         ThreadObject thread = assistantGenerator.createThread();
         String thread_id = thread.getId();

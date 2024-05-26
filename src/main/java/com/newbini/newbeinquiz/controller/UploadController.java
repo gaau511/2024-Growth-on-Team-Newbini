@@ -1,19 +1,19 @@
 package com.newbini.newbeinquiz.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.chat.AssistantGenerator;
 import com.newbini.newbeinquiz.chat.ExecuteManager;
 import com.newbini.newbeinquiz.chat.MessageGenerator;
-import com.newbini.newbeinquiz.web.request.MultiPartFilesForm;
-import com.newbini.newbeinquiz.web.response.AssistantObject;
+import com.newbini.newbeinquiz.web.request.Quiz;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,15 +23,31 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RestController
+@RequestMapping("/upload")
 public class UploadController {
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Value("${openai.api.key}")
     private String apiKey;
 
-    @PostMapping("/upload")
-    @ResponseBody
-    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files) throws IOException, InterruptedException {
+    private String type;
+    private String difficulty;
+
+    @GetMapping
+    public String uploadForm( @RequestParam("type") String type,
+                              @RequestParam("difficulty") String difficulty) {
+
+        this.type = type;
+        this.difficulty = difficulty;
+
+        System.out.println("type = " + type);
+        System.out.println("difficulty = " + difficulty);
+        return "file-upload";
+    }
+
+    @PostMapping
+    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files, RedirectAttributes redirectAttributes, Model model) throws IOException, InterruptedException, ParseException {
         log.info("files ={}", files);
         List<File> fileListForAttach = new ArrayList<>();
 
@@ -39,19 +55,15 @@ public class UploadController {
             if (file != null && !file.isEmpty()) {
                 String fileName = file.getOriginalFilename();
                 File dest = new File("C:\\Users\\82109\\Desktop\\Newbini\\src\\main\\resources\\files\\" + fileName);
-                try {
-                    file.transferTo(dest);
-                    fileListForAttach.add(dest);
-                } catch (IOException e) {
-                    return "error";
-                }
+                file.transferTo(dest);
+                fileListForAttach.add(dest);
             }
         }
 
         AssistantGenerator assistant = new AssistantGenerator(apiKey);
         System.out.println("assistant = " + assistant);
 
-        assistant.createAssistant();
+        assistant.createAssistant(type,difficulty);
         System.out.println("assistant = " + assistant);
 
         String assistant_id = assistant.getAssistant_id();
@@ -77,6 +89,8 @@ public class UploadController {
         String answer = execute.run(thread_id, assistant_id);
         System.out.println("answer = " + answer);
 
-        return answer;
+        Quiz quiz = objectMapper.readValue(answer, Quiz.class);
+        model.addAttribute("quiz",quiz);
+        return "result";
     }
 }

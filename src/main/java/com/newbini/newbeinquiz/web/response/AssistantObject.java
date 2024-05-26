@@ -34,4 +34,9 @@ public class AssistantObject {
     public static class FileSearch {
         private List<String> vector_store_ids;
     }
+
+    @Data
+    private static class Format {
+        private String type;
+    }
 }
