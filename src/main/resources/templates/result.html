@@ -5,56 +5,110 @@
     <meta charset="UTF-8">
     <title>Quiz</title>
     <style>
-        .question-container {
-        padding: 10px;
-        border: 5px solid #ccc;
-        border-radius: 5px;
-        margin-bottom: 10px;
-    }
+        /* CSS 스타일 */
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
 
-    .ox-question span,
-    .mcq-question span,
-    .subjective-question span {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
+        .question {
+            background-color: #ccccff;
+            border: 4px solid #663399;
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-    .ox-question input[type="radio"] {
-        margin-right: 5px;
-    }
+        .question-text {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .mcq-question label {
-        margin-left: 5px;
-    }
+        .answer-options {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    .subjective-question input[type="text"] {
-        width: 100%;
-        padding: 5px;
-        box-sizing: border-box;
-    }
+        .answer-options li {
+            margin-bottom: 5px;
+        }
+
+        .answer-options input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .answer {
+            visibility: hidden;
+        }
+
+        .short-answer {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-<div th:each="question, iter : ${quiz.questions}" th:with="qNum=${iter.index+1}" class="question-container">
-    <div th:if="${question.type == 'O/X'}" class="ox-question">
-        <span th:text="|Q${qNum}. ${question.question}|">(O/X 질문)</span>
-        <div>
-            <input type="radio" name="q${qNum}" value="true" /> O
-            <input type="radio" name="q${qNum}" value="false" /> X
+<div class="quiz-container">
+    <div th:each="question, iterStat : ${quiz.questions}">
+        <div th:switch="${question.type}" class="question">
+            <div th:case="'객관식'">
+                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                <ul class="answer-options">
+                    <li th:each="option, optionStat : ${question.options}">
+                        <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
+                        <label th:for="${'q' + iterStat.count + '-' + optionStat.count}" th:text="${option}"></label>
+                    </li>
+                </ul>
+                <div th:class="|answer answer-q${iterStat.count}|">
+                    <span th:text="|정답 : ${question.answer}|">정답</span>
+                </div>
+            </div>
+            <div th:case="'주관식'">
+                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                <input type="text" class="short-answer" />
+                <span th:text="${question.answer}" style="display:none;"></span>
+                <div th:class="|answer answer-q${iterStat.count}|">
+                    <span th:text="|정답 : ${question.answer}|">정답</span>
+                </div>
+            </div>
+            <div th:case="'O/X'">
+                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                <ul class="answer-options">
+                    <li>
+                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="true" />
+                        <label th:for="${'q' + iterStat.count + '-true'}">O</label>
+                    </li>
+                    <li>
+                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="false" />
+                        <label th:for="${'q' + iterStat.count + '-false'}">X</label>
+                    </li>
+                </ul>
+                <div th:class="|answer answer-q${iterStat.count}|">
+                    <span th:text="|정답 : ${question.answer}|">정답</span>
+                </div>
+            </div>
         </div>
     </div>
-    <div th:if="${question.type == '객관식'}" class="mcq-question">
-        <span th:text="|Q${qNum}. ${question.question}|">(객관식 질문)</span>
-        <div th:each="option, optIter : ${question.options}">
-            <input type="radio" th:id="|q${qNum}_opt${optIter.index}|" th:name="|q${qNum}|" th:value="${option}">
-            <label th:for="|q${qNum}_opt${optIter.index}|" th:text="${option}">(옵션)</label>
-        </div>
-    </div>
-    <div th:if="${question.type == '주관식'}" class="subjective-question">
-        <span th:text="|Q${qNum}. ${question.question}|">(주관식 질문)</span>
-        <input type="text" th:name="|q${qNum}|" placeholder="주관식 답변" />
-    </div>
-</div></div>
+    <button onclick="submit()">채점하기</button>
+</div>
+
+<script>
+
+    function submit() {
+  const answers = document.querySelectorAll('.answer');
+
+  answers.forEach(answer => {
+    answer.style.visibility = 'visible';
+  });
+}
+
+</script>
 </body>
 </html>
