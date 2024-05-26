@@ -7,7 +7,6 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ExecuteManager {
@@ -21,7 +20,7 @@ public class ExecuteManager {
         this.openAiApiKey = openAiApiKey;
     }
 
-    public RunObject run(String thread_id, String assistant_id) throws InterruptedException {
+    public String run(String thread_id, String assistant_id) throws InterruptedException {
         this.thread_id = thread_id;
 
         String url = "https://api.openai.com/v1/threads/" +thread_id+"/runs";
@@ -41,8 +40,7 @@ public class ExecuteManager {
         run_id = runObject.getId();
         String answer = getAnswer();
 
-        System.out.println("answer = " + answer);
-        return runObject;
+        return answer;
     }
 
     private String getAnswer() throws InterruptedException {

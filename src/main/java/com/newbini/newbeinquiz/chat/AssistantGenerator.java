@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.web.response.AssistantObject;
 import com.newbini.newbeinquiz.web.response.ThreadObject;
 import com.newbini.newbeinquiz.web.response.VectorStoreObject;
+import lombok.Getter;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,8 +18,14 @@ public class AssistantGenerator {
     private final String openAiApiKey;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Getter
     private String assistant_id = "";
+
+    @Getter
     private String thread_id = "";
+
+    @Getter
     private String vector_store_id = "";
 
     public AssistantGenerator(String openAiApiKey) {

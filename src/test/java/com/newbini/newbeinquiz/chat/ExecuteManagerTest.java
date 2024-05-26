@@ -12,9 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ExecuteManagerTest {
     String apiKey = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
-    MessageGenerator messageGenerator = new MessageGenerator("sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I");
+    MessageGenerator messageGenerator = new MessageGenerator("sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I",null);
     AssistantGenerator assistantGenerator = new AssistantGenerator("sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I");
     ExecuteManager executeManager = new ExecuteManager(apiKey);
+
+    ExecuteManagerTest() throws IOException {
+    }
 
     @Test
     void run() throws IOException, InterruptedException {

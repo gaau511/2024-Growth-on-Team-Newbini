@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.web.response.FileObject;
 import com.newbini.newbeinquiz.web.response.MessageObject;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,12 +24,23 @@ public class MessageGenerator {
     private final String openAiApiKey;
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final List<File> attachmentList;
     private List<String> file_ids = new ArrayList<>();
+
+    @Getter
     private String message_id = "";
+    private Map<String, Object> attachment = new HashMap<>();
 
 
-    public MessageGenerator(String openAiApiKey) {
+    public MessageGenerator(String openAiApiKey, List<File> attachmentList) throws IOException {
         this.openAiApiKey = openAiApiKey;
+        this.attachmentList = attachmentList;
+
+        for (File file : attachmentList) {
+            FileObject fileObject = attachForTest(file);
+            String file_id = fileObject.getId();
+            attachment.put("file_id", file_id);
+        }
     }
 
     public void attachFiles(List<MultipartFile> files) throws IOException {
@@ -104,18 +116,11 @@ public class MessageGenerator {
         requestBody.put("role", "user");
         requestBody.put("content", content);
 
-        Map<String, Object> attachment = new HashMap<>();
-        if (!file_ids.isEmpty()) {
-            for (String file_id : file_ids) {
-                attachment.put("file_id", file_id);
-            }
-        }
 
         Map<String, Object> tool = new HashMap<>();
         tool.put("type", "file_search");
 
         attachment.put("tools", Collections.singletonList(tool));
-
         requestBody.put("attachments", Collections.singletonList(attachment));
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
