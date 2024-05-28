@@ -49,7 +49,12 @@ public class AssistantGenerator {
             "      {\n" +
             "        \"type\": \"O/X\",\n" +
             "        \"question\": \"지구는 태양 주위를 돈다.\",\n" +
-            "        \"answer\": O\n" +
+            "        \"answer\": \"O\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"type\": \"O/X\",\n" +
+            "        \"question\": \"거미는 곤충에 속한다.\",\n" +
+            "        \"answer\": \"X\"\n" +
             "      }\n" +
             "    ]\n" +
             "  }";
@@ -62,7 +67,10 @@ public class AssistantGenerator {
                 "저의 목적은 학생들의 시험 공부를 돕는 데에 있습니다.\n" +
                 "저는 **한국어**로만 대답하며 반드시 존댓말을 사용합니다.\n" +
                 "\n" +
-                "첨부된 파일들을 바탕으로 총 **20**개의 퀴즈와 정답을 생성합니다\n" +
+                "**첨부된 파일**들을 바탕으로 총 **20**개의 퀴즈와 정답을 생성합니다\n" +
+                "파일에 언급되지 않은 내용은 퀴즈에 반영하지 않습니다.\n"+
+                "객관식과 O/X 퀴즈의 답변 문항은 적정한 비율로 섞여있어야 합니다.\n" +
+                "예를 들어, 정답이 모두 \"O\"이거나, 1번이어서는 안됨니다.\n"+
                 "문제 유형은 " + type + "으로 구성되어 있습니다. 다른 유형은 생성하지 않습니다.\n" +
                 "난이도는 " + difficulty + "입니다.\n" +
                 "강조된 내용은 반드시 퀴즈에 반영합니다.\n" +
@@ -103,9 +111,9 @@ public class AssistantGenerator {
 //        format.put("type", "json_object");
 //        requestBody.put("response_format", format);
         requestBody.put("model", "gpt-4o-2024-05-13");
+        requestBody.put("temperature", 0.6);
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-        System.out.println(requestEntity);
         String response = restTemplate.postForObject("https://api.openai.com/v1/assistants", requestEntity, String.class);
         AssistantObject assistant = objectMapper.readValue(response, AssistantObject.class);
         assistant_id = assistant.getId();

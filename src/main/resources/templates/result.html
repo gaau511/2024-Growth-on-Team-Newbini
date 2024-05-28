@@ -13,11 +13,21 @@
         }
 
         .question {
-            background-color: #ccccff;
-            border: 4px solid #663399;
+            background-color: #EEE6FF;
+            border: 2px solid #D4BFFF;
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 20px;
+        }
+
+        .question.correct {
+            background-color: #CEFFC4;
+            border: 2px solid #93FF7D;
+        }
+
+        .question.incorrect {
+            background-color: #FFE4E0;
+            border: 2px solid #FF7361;
         }
 
         .question-text {
@@ -33,15 +43,21 @@
         }
 
         .answer-options li {
+            margin : 5px;
             margin-bottom: 5px;
         }
 
         .answer-options input[type="radio"] {
+            margin : 5px;
             margin-right: 5px;
         }
 
         .answer {
-            visibility: hidden;
+            display: none;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding : 10px;
+            margin : 7px;
         }
 
         .short-answer {
@@ -59,19 +75,19 @@
 <div class="quiz-container">
     <div th:each="question, iterStat : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">
-            <div th:case="'객관식'">
-                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
-                <ul class="answer-options">
-                    <li th:each="option, optionStat : ${question.options}">
-                        <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
-                        <label th:for="${'q' + iterStat.count + '-' + optionStat.count}" th:text="${option}"></label>
-                    </li>
-                </ul>
-                <div th:class="|answer answer-q${iterStat.count}|">
-                    <span th:text="|정답 : ${question.answer}|">정답</span>
-                </div>
+            <div th:case="'객관식'" class="multiple">
+                    <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                    <ul class="answer-options multiple" >
+                        <li th:each="option, optionStat : ${question.options}">
+                            <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
+                            <label th:for="${'q' + iterStat.count + '-' + optionStat.count}" th:text="${option}"></label>
+                        </li>
+                    </ul>
+                    <div th:class="|answer answer-q${iterStat.count}|">
+                        <span th:text="|정답 : ${question.answer}|">정답</span>
+                    </div>
             </div>
-            <div th:case="'주관식'">
+            <div th:case="'주관식'" class="essay">
                 <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                 <input type="text" class="short-answer" />
                 <span th:text="${question.answer}" style="display:none;"></span>
@@ -79,7 +95,7 @@
                     <span th:text="|정답 : ${question.answer}|">정답</span>
                 </div>
             </div>
-            <div th:case="'O/X'">
+            <div th:case="'O/X'" class="OX">
                 <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                 <ul class="answer-options">
                     <li>
@@ -97,18 +113,87 @@
             </div>
         </div>
     </div>
-    <button onclick="submit()">채점하기</button>
+    <button id="submit-button">채점하기</button>
 </div>
 
-<script>
-    function submit() {
-  const answers = document.querySelectorAll('.answer');
+<script th:inline="javascript">
 
-  answers.forEach(answer => {
-    answer.style.visibility = 'visible';
-  });
-}
+    document.getElementById('submit-button').addEventListener('click', function() {
 
+        const questions = document.querySelectorAll('.question');
+        let answers = [];
+        [[${quiz.questions}]].forEach(function(question) {
+            answers.push(question.answer);
+        });
+
+        let score = 0;
+        questions.forEach((question, index) => {
+        const type = question.querySelector('div').className;
+        const answer = answers[index];
+
+        console.log(type);
+        console.log(answer);
+
+        switch (type) {
+            case 'multiple':
+                var selectedOption = question.querySelector('input[type="radio"]:checked');
+                console.log(selectedOption);
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    console.log(userAnswer);
+                    if (userAnswer === answer) {
+                        score++;
+                        console.log(score);
+                        question.classList.add('correct');
+                    } else {
+                        question.classList.add('incorrect');
+                    }
+                }
+                else {
+                    question.classList.add('unsolved');
+                }
+                break;
+            case 'essay':
+                const userAnswer = question.querySelector('input[type="text"]').value;
+                if (userAnswer) {
+                    if (userAnswer.trim().toLowerCase() === answer.trim().toLowerCase()) {
+                        score++;
+                        question.classList.add('correct');
+                    } else {
+                        question.classList.add('incorrect');
+                    }
+                } else {
+                    question.classList.add('unsolved');
+                }
+                break;
+            case 'OX':
+                var selectedOption = question.querySelector('input[type="radio"]:checked');
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    if (userAnswer === answer) {
+                    score++;
+                    question.classList.add('correct');
+                    } else {
+                        question.classList.add('incorrect');
+                    }
+                }
+                else {
+                    question.classList.add('unsolved');
+                }
+                break;
+        }
+        });
+
+        document.querySelectorAll('.answer').forEach(function(element) {
+            element.style.display = 'flex';
+        });
+
+        document.querySelectorAll('.short-answer').forEach(function(element) {
+            element.disabled = true;
+        });
+
+
+    });
 </script>
 </body>
 </html>

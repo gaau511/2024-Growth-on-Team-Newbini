@@ -43,20 +43,17 @@ public class UploadController {
     private String difficulty;
 
     @GetMapping("/upload")
-    public String uploadForm( @RequestParam("type") String type,
-                              @RequestParam("difficulty") String difficulty) {
+    public String uploadForm( @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
+                              @RequestParam(value = "difficulty", defaultValue = "보통") String difficulty) {
 
         this.type = type;
         this.difficulty = difficulty;
 
-        System.out.println("type = " + type);
-        System.out.println("difficulty = " + difficulty);
         return "file-upload";
     }
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files, RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
-        log.info("files ={}", files);
         List<File> fileListForAttach = new ArrayList<>();
         makeFileAttachList(files, fileListForAttach);
 
@@ -92,6 +89,8 @@ public class UploadController {
         String message_id = createdMessage.getId();
 
         ExecuteManager execute = new ExecuteManager(key);
+        log.info("running start");
+
         String answer = execute.run(thread_id, assistant_id);
         log.info("run success");
 

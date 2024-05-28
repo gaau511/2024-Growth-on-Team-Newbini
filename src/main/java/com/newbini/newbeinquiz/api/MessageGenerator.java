@@ -123,7 +123,6 @@ public class MessageGenerator {
         requestBody.put("attachments", Collections.singletonList(attachment));
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-        System.out.println("requestEntity = " + requestEntity);
         String response = restTemplate.postForObject(url, requestEntity, String.class);
         MessageObject message = objectMapper.readValue(response, MessageObject.class);
         message_id = message.getId();

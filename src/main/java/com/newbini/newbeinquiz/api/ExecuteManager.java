@@ -34,7 +34,6 @@ public class ExecuteManager {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        System.out.println("requestEntity = " + requestEntity);
         ResponseEntity<RunObject> response = restTemplate.postForEntity(url, requestEntity, RunObject.class);
         RunObject runObject = response.getBody();
 

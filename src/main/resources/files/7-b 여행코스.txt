@@ -1,0 +1,45 @@
+7-b 여행코스
+
+변형 인접 리스트 방식 : 그래프로 바꿔서 풀어 (네 방향)
+
+현재노드 ㅡ- 상하좌우
+ex) 1 - xxxo
+    2-  oxox
+
+global
+int n,m
+char city[m][n]
+check[m][n] = {false}
+int answr = 0
+queue<pair<int,int>> que
+int dx[4] = {0,0,1,-1}, dy[4] = {1,-1,0,0}
+
+int main()
+
+read n, M
+for i = 1 to M
+	for j = 1 to N
+		read city[i][j]
+		if city [i][j] == 'X'
+			check [i][j] = true
+
+for i -1 to M
+	for j = 1 to N
+		if check [i][j] == true
+			continue
+		check [i][j] = true
+		answer++
+		que.push({i,j})
+
+
+		while que.empty == false
+		pair<int,int> now = que.front();
+		que.pop()
+		for i = 0 to 3
+			if now.first+dx[k] < 1 or now.first+dx[k] > M or now.second+dy[k] < 1 or now.second+dy[k] > N
+				continue;
+			if check[now.first + dx[k]][now.second + dy[k]] = true
+				continue
+			check[now.first + dx[k]][now.second + dy[k]] = true
+			que.push({now.first + dx[k],now.second + dy[k]})
+print answer
