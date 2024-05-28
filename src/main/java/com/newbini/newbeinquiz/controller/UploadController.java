@@ -23,7 +23,7 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/upload")
+@RequestMapping
 public class UploadController {
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -34,7 +34,7 @@ public class UploadController {
     private String type;
     private String difficulty;
 
-    @GetMapping
+    @GetMapping("/upload")
     public String uploadForm( @RequestParam("type") String type,
                               @RequestParam("difficulty") String difficulty) {
 
@@ -46,7 +46,7 @@ public class UploadController {
         return "file-upload";
     }
 
-    @PostMapping
+    @PostMapping("/result")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files, RedirectAttributes redirectAttributes, Model model) throws IOException, InterruptedException, ParseException {
         log.info("files ={}", files);
         List<File> fileListForAttach = new ArrayList<>();
@@ -59,6 +59,7 @@ public class UploadController {
                 fileListForAttach.add(dest);
             }
         }
+
 
         AssistantGenerator assistant = new AssistantGenerator(apiKey);
         System.out.println("assistant = " + assistant);

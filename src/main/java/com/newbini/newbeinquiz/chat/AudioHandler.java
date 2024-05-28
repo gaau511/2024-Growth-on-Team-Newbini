@@ -8,15 +8,11 @@
 //import org.springframework.ai.openai.audio.transcription.AudioTranscriptionPrompt;
 //import org.springframework.ai.openai.audio.transcription.AudioTranscriptionResponse;
 //import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.multipart.MultipartFile;
 //
+//import java.io.File;
 //import java.io.IOException;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
-//import java.nio.file.StandardCopyOption;
+//import java.nio.file.*;
 //
 //@Slf4j
 //@RequiredArgsConstructor
@@ -24,10 +20,10 @@
 //
 //    private final OpenAiAudioApi openAiAudioApi;
 //
-////    @Value("${file.dir}")
+//    @Value("${file.dir}")
 //    private String uploadDir;
 //
-//    String audioToEnglish(MultipartFile audioFile) throws IOException {
+//    File audioToEnglish(MultipartFile audioFile) throws IOException {
 //        Path filePath = saveFile(audioFile);
 //
 //        OpenAiAudioTranscriptionClient openAiTranscriptionClient = new OpenAiAudioTranscriptionClient(openAiAudioApi);
@@ -43,7 +39,15 @@
 //        AudioTranscriptionPrompt transcriptionRequest = new AudioTranscriptionPrompt(audioFile.getResource(), transcriptionOptions);
 //        AudioTranscriptionResponse response = openAiTranscriptionClient.call(transcriptionRequest);
 //
-//        return response.getResult().getOutput();
+//        String result = response.getResult().getOutput();
+//        return stringToTxtFile(result);
+//    }
+//
+//    private File stringToTxtFile(String str) throws IOException {
+//        String filePath = uploadDir + "/temporary.txt";
+//
+//        Path path = Files.write(Paths.get(filePath), str.getBytes(), StandardOpenOption.CREATE);
+//        return path.toFile();
 //    }
 //
 //    private Path saveFile(MultipartFile file) throws IOException {

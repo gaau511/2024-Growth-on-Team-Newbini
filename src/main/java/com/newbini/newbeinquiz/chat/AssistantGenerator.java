@@ -51,7 +51,7 @@ public class AssistantGenerator {
             "      {\n" +
             "        \"type\": \"O/X\",\n" +
             "        \"question\": \"지구는 태양 주위를 돈다.\",\n" +
-            "        \"answer\": true\n" +
+            "        \"answer\": O\n" +
             "      }\n" +
             "    ]\n" +
             "  }";
