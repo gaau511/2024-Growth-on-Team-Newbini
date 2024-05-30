@@ -21,7 +21,12 @@ public class AudioHandler {
         this.openAiApiKey = key;
     }
 
-    File audioToEnglish(File file) throws IOException {
+    /**
+     * convert audioFile (audio/*) to textfile(.txt)
+     * @param file
+     * @return new TextFile
+     */
+    File audioToText(File file) throws IOException {
         String url = "https://api.openai.com/v1/audio/transcriptions";
 
         HttpHeaders headers = new HttpHeaders();
@@ -30,15 +35,21 @@ public class AudioHandler {
 
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", new FileSystemResource(file));
+
+        // whisper-1 model 사용
         builder.part("model", "whisper-1");
+
+        //답변 형식 지정
         builder.part("response_format", "text");
 
         HttpEntity<?> entity = new HttpEntity<>(builder.build(), headers);
-        System.out.println("entity = " + entity);
         String body = restTemplate.exchange(url, HttpMethod.POST, entity, String.class).getBody();
         return stringToTxtFile(file.getName(), body);
     }
 
+    /**
+     * conver string to .txt file
+     */
     private File stringToTxtFile(String name, String str) throws IOException {
         String filePath = uploadDir + "/" + name + "_transcription.txt";
 

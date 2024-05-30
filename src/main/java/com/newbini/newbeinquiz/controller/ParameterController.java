@@ -1,6 +1,6 @@
 package com.newbini.newbeinquiz.controller;
 
-import com.newbini.newbeinquiz.web.request.ParameterForm;
+import com.newbini.newbeinquiz.dto.request.ParameterForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -22,6 +22,7 @@ public class ParameterController {
         List<String> problem_types = form.getProblem_types();
         String difficulty = form.getDifficulty();
 
+        // /upload with path parameter
         redirectAttributes.addAttribute("type", problem_types);
         redirectAttributes.addAttribute("difficulty", difficulty);
 

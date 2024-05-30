@@ -1,7 +1,7 @@
 package com.newbini.newbeinquiz.api;
 
-import com.newbini.newbeinquiz.web.response.MessageObject;
-import com.newbini.newbeinquiz.web.response.ThreadObject;
+import com.newbini.newbeinquiz.dto.response.MessageObject;
+import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 class MessageGeneratorTest {
-    String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+    String key = "";
     List<File> fileList = new ArrayList<>();
     AssistantGenerator assistantGenerator = new AssistantGenerator(key);
 

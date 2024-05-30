@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  * test 영상에서만 활용
  */
 
-
 @Controller
 public class ExampleController {
 

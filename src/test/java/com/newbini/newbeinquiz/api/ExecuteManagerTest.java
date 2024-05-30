@@ -1,8 +1,8 @@
 package com.newbini.newbeinquiz.api;
 
-import com.newbini.newbeinquiz.web.response.AssistantObject;
-import com.newbini.newbeinquiz.web.response.MessageObject;
-import com.newbini.newbeinquiz.web.response.ThreadObject;
+import com.newbini.newbeinquiz.dto.response.AssistantObject;
+import com.newbini.newbeinquiz.dto.response.MessageObject;
+import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 class ExecuteManagerTest {
-    String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+    String key = "";
     MessageGenerator messageGenerator = new MessageGenerator(key,null);
     AssistantGenerator assistantGenerator = new AssistantGenerator(key);
     ExecuteManager executeManager = new ExecuteManager(key);
@@ -26,7 +26,7 @@ class ExecuteManagerTest {
         String thread_id = thread.getId();
 
         File file = new File("test_sample.txt");
-        messageGenerator.attachForTest(file);
+        messageGenerator.attach(file);
         MessageObject message = messageGenerator.createMessage(thread_id);
         executeManager.run(thread_id, assistant_id);
     }

@@ -1,15 +1,15 @@
 package com.newbini.newbeinquiz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.newbini.newbeinquiz.web.response.AssistantObject;
-import com.newbini.newbeinquiz.web.response.ThreadObject;
-import com.newbini.newbeinquiz.web.response.VectorStoreObject;
+import com.newbini.newbeinquiz.dto.response.AssistantObject;
+import com.newbini.newbeinquiz.dto.response.ThreadObject;
+import com.newbini.newbeinquiz.dto.response.VectorStoreObject;
 import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.Test;
 
 class AssistantGeneratorTest {
 
-    private final String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+    private final String key = "";
     AssistantGenerator assistantGenerator = new AssistantGenerator(key);
 
     @Test

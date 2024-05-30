@@ -1,7 +1,7 @@
 package com.newbini.newbeinquiz.api;
 
-import com.newbini.newbeinquiz.web.response.ResultObject;
-import com.newbini.newbeinquiz.web.response.RunObject;
+import com.newbini.newbeinquiz.dto.response.ResultObject;
+import com.newbini.newbeinquiz.dto.response.RunObject;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +18,9 @@ public class ExecuteManager {
         this.openAiApiKey = openAiApiKey;
     }
 
+    /**
+     * Run assistant
+     */
     public String run(String thread_id, String assistant_id) throws InterruptedException {
         this.thread_id = thread_id;
 
@@ -42,6 +45,10 @@ public class ExecuteManager {
         return answer;
     }
 
+    /**
+     *When stream == false, we can't use the SSE method,
+     * so we retrieve once every second to check if the answer is complete
+     */
     private String getAnswer() throws InterruptedException {
         while(true) {
             Thread.sleep(1000);
@@ -53,6 +60,9 @@ public class ExecuteManager {
         }
     }
 
+    /**
+     * After the answer generation is confirmed, call it.
+     */
     private ResultObject sendFinalRequest() {
         String url = "https://api.openai.com/v1/threads/"+thread_id+"/messages";
 

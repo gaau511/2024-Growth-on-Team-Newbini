@@ -12,6 +12,9 @@ public class AppConfig {
     private String key;
 
     @Bean
+    /**
+     * Open Ai Audio Api Bean 등록
+     */
     public OpenAiAudioApi openAiAudioApi() {
         return new OpenAiAudioApi(key);
     }

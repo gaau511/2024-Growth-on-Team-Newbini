@@ -2,9 +2,9 @@ package com.newbini.newbeinquiz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newbini.newbeinquiz.web.response.AssistantObject;
-import com.newbini.newbeinquiz.web.response.ThreadObject;
-import com.newbini.newbeinquiz.web.response.VectorStoreObject;
+import com.newbini.newbeinquiz.dto.response.AssistantObject;
+import com.newbini.newbeinquiz.dto.response.ThreadObject;
+import com.newbini.newbeinquiz.dto.response.VectorStoreObject;
 import lombok.Getter;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.HttpEntity;
@@ -33,6 +33,9 @@ public class AssistantGenerator {
         this.openAiApiKey = openAiApiKey;
     }
 
+    /**
+     * Example answer types
+     */
     String jsonString = "{\n" +
             "    \"questions\": [\n" +
             "      {\n" +
@@ -61,7 +64,9 @@ public class AssistantGenerator {
 
     public AssistantObject createAssistant(String type, String difficulty) throws JsonProcessingException, ParseException {
 
-
+        /**
+         * prompt
+         */
         String instruction = "저는 학술 콘텐츠 개발자입니다. \n" +
                 "대학생들을 대상으로 강의 내용을 기반으로 퀴즈를 생성합니다.\n" +
                 "저의 목적은 학생들의 시험 공부를 돕는 데에 있습니다.\n" +
@@ -69,6 +74,9 @@ public class AssistantGenerator {
                 "\n" +
                 "**첨부된 파일**들을 바탕으로 총 **20**개의 퀴즈와 정답을 생성합니다\n" +
                 "파일에 언급되지 않은 내용은 퀴즈에 반영하지 않습니다.\n"+
+                "퀴즈는 **첨부된 파일을 모두 종합해서** 만듭니다.\n" +
+                "퀴즈에 누락되는 파일은 없습니다. \n" +
+                "예를 들어, 단일 파일에서 모든 문제가 출제되는 경우는 없습니다.\n" +
                 "객관식과 O/X 퀴즈의 답변 문항은 적정한 비율로 섞여있어야 합니다.\n" +
                 "예를 들어, 정답이 모두 \"O\"이거나, 1번이어서는 안됨니다.\n"+
                 "문제 유형은 " + type + "으로 구성되어 있습니다. 다른 유형은 생성하지 않습니다.\n" +
@@ -90,26 +98,14 @@ public class AssistantGenerator {
         requestBody.put("instructions", instruction);
         requestBody.put("name", "Quizard");
 
-//        Quiz quiz = objectMapper.readValue(jsonString, Quiz.class);
-
-
-
         List<Map<String, Object>> toolsList = new ArrayList<>();
         Map<String,Object> toolsListFileSearch =new LinkedHashMap<>();
-//        Map<String,Object> toolListFunctionTool = new LinkedHashMap<>();
-//
 
         toolsListFileSearch.put("type","file_search");
-//        toolListFunctionTool.put("name", "Quiz_Generator");
-//        toolListFunctionTool.put("parameters", quiz);
-//        toolsListFunction.put("type", "function");
-//        toolsListFunction.put("function", toolListFunctionTool);
-//
+
         toolsList.add(toolsListFileSearch);
         requestBody.put("tools", toolsList);
-//        Map<String, String> format = new HashMap<>();
-//        format.put("type", "json_object");
-//        requestBody.put("response_format", format);
+
         requestBody.put("model", "gpt-4o-2024-05-13");
         requestBody.put("temperature", 0.6);
 
