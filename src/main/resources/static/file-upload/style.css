@@ -148,3 +148,23 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
+
+ .loading-image {
+            position: absolute;
+            left: 607px;
+            top: 165px;
+ }
+
+.notice-image {
+    position: absolute;
+    left: 510px;
+    top: 572px;
+}
+
+#loading-page {
+        display: none;
+}
+
+#upload-page {
+        display: block;
+}

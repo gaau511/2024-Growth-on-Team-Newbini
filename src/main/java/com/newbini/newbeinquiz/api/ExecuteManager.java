@@ -1,6 +1,5 @@
 package com.newbini.newbeinquiz.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.web.response.ResultObject;
 import com.newbini.newbeinquiz.web.response.RunObject;
 import org.springframework.http.*;

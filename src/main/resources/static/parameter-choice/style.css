@@ -22,8 +22,9 @@ button:hover {
     color: white;
 }
 
-.selected .submit {
+.submit {
     background-color: #18A11E;
+    color: white;
 }
 
 /* 문제 유형 버튼 */
