@@ -1,5 +1,6 @@
 package com.newbini.newbeinquiz.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.api.AssistantGenerator;
 import com.newbini.newbeinquiz.api.ExecuteManager;
@@ -39,8 +40,10 @@ public class UploadController {
     @Value("${openai.api.key}")
     private String key;
 
+
     private String type;
     private String difficulty;
+    private AudioHandler audioHandler;
 
     @GetMapping("/upload")
     public String uploadForm( @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
@@ -54,14 +57,23 @@ public class UploadController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files, RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
+        audioHandler = new AudioHandler(uploadDir, key);
+
         List<File> fileListForAttach = new ArrayList<>();
         makeFileAttachList(files, fileListForAttach);
 
         String answer = RunExecuteSequence(fileListForAttach);
 
-        Quiz quiz = objectMapper.readValue(answer, Quiz.class);
-        redirectAttributes.addFlashAttribute("quiz", quiz);
+        try {
+            Quiz quiz = objectMapper.readValue(answer, Quiz.class);
+            redirectAttributes.addFlashAttribute("quiz", quiz);
+        }
+        catch (JsonParseException e){
+            redirectAttributes.addFlashAttribute("jsonError", answer);
+        }
+
         return "redirect:/result";
+
     }
 
     private String RunExecuteSequence(List<File> fileListForAttach) throws ParseException, IOException, InterruptedException {
@@ -98,14 +110,20 @@ public class UploadController {
     }
 
     private void makeFileAttachList(List<MultipartFile> files, List<File> fileListForAttach) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
 
         for (MultipartFile file : files) {
             if (file != null && !file.isEmpty()) {
                 String fileName = file.getOriginalFilename();
-                File dest = new File(uploadPath + "\\" + fileName);
+                File dest = new File(uploadDir + fileName);
                 file.transferTo(dest);
-                fileListForAttach.add(dest);
+
+                if (file.getContentType().startsWith("audio")) {
+                    File textFile = audioHandler.audioToEnglish(dest);
+                    fileListForAttach.add(textFile);
+                } else {
+                    fileListForAttach.add(dest);
+
+                }
             }
         }
     }

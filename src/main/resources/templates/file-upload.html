@@ -29,17 +29,30 @@
             display: flex;
         }
 
-        .loading-image {
-            position: absolute;
-            left: 607px;
-            top: 165px;
+        .container img {
+            margin: 10px;
+            max-width: 100%;
+            height: auto;
         }
 
-        .notice-image {
-            position: absolute;
-            left: 510px;
-            top: 572px;
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+
+<!--        .loading-image {-->
+<!--            position: ;-->
+<!--            left: 607px;-->
+<!--            top: 165px;-->
+<!--        }-->
+
+<!--        .notice-image {-->
+<!--            position: absolute;-->
+<!--            left: 510px;-->
+<!--            top: 572px;-->
+<!--        }-->
     </style>
 </head>
 <body>
@@ -48,7 +61,6 @@
     <img src="/images/notice.svg" alt="notice" class="notice-image">
 </div>
 
-<h2>파일 업로드</h2>
 <form action="" method="post" enctype="multipart/form-data" id="uploadForm">
     <input type="file" name="attach_file" id="file">
     <button type="submit">업로드</button>
