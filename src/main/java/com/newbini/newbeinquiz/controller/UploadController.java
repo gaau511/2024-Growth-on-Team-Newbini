@@ -1,6 +1,5 @@
 package com.newbini.newbeinquiz.controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.api.AssistantGenerator;
 import com.newbini.newbeinquiz.api.ExecuteManager;
@@ -14,15 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,13 +60,9 @@ public class UploadController {
 
         String answer = RunExecuteSequence(fileListForAttach);
 
-        try {
-            Quiz quiz = objectMapper.readValue(answer, Quiz.class);
-            redirectAttributes.addFlashAttribute("quiz", quiz);
-        }
-        catch (JsonParseException e){
-            redirectAttributes.addFlashAttribute("jsonError", answer);
-        }
+        Quiz quiz = objectMapper.readValue(answer, Quiz.class);
+        redirectAttributes.addFlashAttribute("quiz", quiz);
+
 
         return "redirect:/result";
 

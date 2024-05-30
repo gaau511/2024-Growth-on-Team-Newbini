@@ -12,7 +12,6 @@ import java.util.Map;
 public class ExecuteManager {
     private final String openAiApiKey;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private String run_id = "";
     private String thread_id = "";
 
@@ -39,6 +38,7 @@ public class ExecuteManager {
 
         run_id = runObject.getId();
         String answer = getAnswer();
+        System.out.println("answer = " + answer);
 
         return answer;
     }

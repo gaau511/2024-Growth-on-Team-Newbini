@@ -1,0 +1,44 @@
+/* 버튼 스타일 초기화 */
+button {
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    background-color: #e7e7e7;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+/* 버튼 호버 효과 */
+button:hover {
+    background-color: #bbb;
+}
+
+/* 선택된 버튼 스타일 */
+.selected {
+    background-color: #A836FF;
+    color: white;
+}
+
+.selected .submit {
+    background-color: #18A11E;
+}
+
+/* 문제 유형 버튼 */
+.problem-type button {
+    margin-right: 10px;
+}
+
+/* 난이도 버튼 */
+.difficulty button {
+    margin-left: 10px;
+}
+
+/* 전체 컨테이너 정렬 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

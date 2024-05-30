@@ -1,77 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <Title>파일 업로드</Title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f9f9f9;
-        }
-
-        #loading {
-            display: none;
-        }
-
-        #uploadForm {
-            display: flex;
-        }
-
-        .container img {
-            margin: 10px;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-<!--        .loading-image {-->
-<!--            position: ;-->
-<!--            left: 607px;-->
-<!--            top: 165px;-->
-<!--        }-->
-
-<!--        .notice-image {-->
-<!--            position: absolute;-->
-<!--            left: 510px;-->
-<!--            top: 572px;-->
-<!--        }-->
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quizard!</title>
+  <link rel="stylesheet" href="/file-upload/style.css" />
 </head>
 <body>
-<div class="image-container" id="loading">
-    <img src="/images/loading.svg" alt="loading" class="loading-image">
-    <img src="/images/notice.svg" alt="notice" class="notice-image">
-</div>
-
-<form action="" method="post" enctype="multipart/form-data" id="uploadForm">
-    <input type="file" name="attach_file" id="file">
-    <button type="submit">업로드</button>
-</form>
-
-<script>
-    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-        document.getElementById('loading').style.display = 'flex';
-        document.getElementById('uploadForm').style.display = 'none';
-    });
-</script>
-
+<nav class="menu">
+  <div class="character">
+    <img src="/file-upload/images/logo.png" alt="Logo" />
+  </div>
+  <div class="nav-buttons">
+    <a href="#" class="nav-list timeline">기록</a>
+    <a href="#" class="nav-list reviewnotes">오답노트</a>
+    <a href="#" class="nav-list settings">설정</a>
+  </div>
+</nav>
+<main>
+  <div class="container">
+    <div class="character"></div>
+    <div>
+      <div class="pointer-text">
+        <img src="/file-upload/images/pointer.png" alt="pointer" class="pointer" />
+        <h1>
+          음성녹음, PDF 파일, Text 문서 중 원하는 형식의
+          <span class="upload-link">파일을 업로드</span>하세요
+        </h1>
+      </div>
+      <div class="file-upload-container">
+        <div class="file-upload-header">
+          <div class="drop-box" id="drop-box">
+            <div style="text-align: center">
+              <img
+                      src="/file-upload/images/upload.png"
+                      width="500"
+                      class="input"
+                      id="upload-image"
+                      alt="Upload Icon"
+              />
+            </div>
+            <div>
+              <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" id="fileUpload" name="attach_file" multiple />
+                <p style="text-align: right">
+                  파일의 최대 크기: 30MB, 최대 첨부 파일 갯수: 8
+                </p>
+                <button  style="text-align: center" type="submit" id="upload-btn" class="centered confirm-button">
+                  확인
+                </button>
+              </form>
+            </div>
+            <div class="file-info" style="text-align: center"></div>
+          </div>
+          <div class="uploaded-files" style="text-align: center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!--<script src="script.js"></script>-->
 </body>
 </html>

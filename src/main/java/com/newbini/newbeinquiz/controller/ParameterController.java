@@ -13,7 +13,7 @@ public class ParameterController {
 
     @GetMapping
     public String parameterPage() {
-        return "parameter";
+        return "parameter-choice";
     }
 
     @PostMapping
