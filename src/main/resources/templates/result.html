@@ -36,11 +36,11 @@
                 <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                 <ul class="answer-options">
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="true" />
+                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="O" />
                         <label th:for="${'q' + iterStat.count + '-true'}">O</label>
                     </li>
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="false" />
+                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="X" />
                         <label th:for="${'q' + iterStat.count + '-false'}">X</label>
                     </li>
                 </ul>
@@ -64,9 +64,9 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        console.log(`Bookmarked question ${index}`);
+                        alert("북마크 되었습니다.");
                     } else {
-                        console.error('Failed to bookmark question');
+                        alert("북마크에 실패했습니다.");
                     }
                 })
                 .catch(error => {
@@ -127,6 +127,8 @@
                 var selectedOption = question.querySelector('input[type="radio"]:checked');
                 if (selectedOption) {
                     const userAnswer = selectedOption.value;
+                    console.log("user" + userAnswer);
+                    console.log("answer" + answer);
                     if (userAnswer === answer) {
                     score++;
                     question.classList.add('correct');
