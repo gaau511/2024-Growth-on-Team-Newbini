@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz</title>
-    <!-- TODO th:href 수정해야함-->
     <link rel="stylesheet"
-          href="../static/result/style.css" th:href="@{C:\Users\82109\Desktop\Newbini\src\main\resources\static\result\style.css}" />
+          href="../static/result/style.css" th:href="@{/result/style.css}" />
 
 </head>
 <body>
@@ -49,12 +48,32 @@
                     <span th:text="|정답 : ${question.answer}|">정답</span>
                 </div>
             </div>
+            <button class="bookmark-btn">북마크</button>
         </div>
     </div>
     <button id="submit-button">채점하기</button>
 </div>
 
 <script th:inline="javascript">
+
+    const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+    bookmarkButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                 fetch(`/bookmark?index=${index}`, {
+                    method: 'POST',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Bookmarked question ${index}`);
+                    } else {
+                        console.error('Failed to bookmark question');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                 });
+            });
+        });
 
     document.getElementById('submit-button').addEventListener('click', function() {
 
@@ -120,17 +139,12 @@
                 }
                 break;
         }
-
-        const button = document.createElement('button');
-        button.textContent = '북마크';
-        button.classList.add('bookmark-btn');
-
-        button.addEventListener('click', function() {
-            alert('북마크 되었습니다.');
         });
 
-        question.appendChild(button);
+        document.querySelectorAll('.bookmark-btn').forEach(function(element) {
+            element.style.display = 'flex';
         });
+
 
         document.querySelectorAll('.answer').forEach(function(element) {
             element.style.display = 'flex';
