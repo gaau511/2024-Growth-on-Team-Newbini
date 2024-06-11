@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -26,5 +27,9 @@ public class TemporalQuizRepository {
 
         log.info("temporal quiz store success");
         log.info("temporalQuizStore = {}", temporalQuizStore);
+    }
+
+    public Optional<QuizForm> findByUuid(UUID uuid) {
+        return Optional.ofNullable(temporalQuizStore.get(uuid));
     }
 }
