@@ -17,10 +17,13 @@ public class QuizForm {
 
     private List<Question> questions = new ArrayList<>();
 
+    /**
+     * Temporarily public for test, Make it private
+     */
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    private static class Question {
+    public static class Question {
         private String type;
         private String question;
         private Object answer;

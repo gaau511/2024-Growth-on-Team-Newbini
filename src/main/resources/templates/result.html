@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz</title>
-    <link rel="stylesheet" href="/result/style.css" />
+    <!-- TODO th:href 수정해야함-->
+    <link rel="stylesheet"
+          href="../static/result/style.css" th:href="@{C:\Users\82109\Desktop\Newbini\src\main\resources\static\result\style.css}" />
 
 </head>
 <body>
@@ -12,7 +14,7 @@
     <div th:each="question, iterStat : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">
             <div th:case="'객관식'" class="multiple">
-                    <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                    <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                     <ul class="answer-options multiple" >
                         <li th:each="option, optionStat : ${question.options}">
                             <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
