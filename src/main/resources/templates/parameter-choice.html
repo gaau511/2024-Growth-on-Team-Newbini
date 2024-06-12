@@ -7,7 +7,7 @@
     <script src="/parameter-choice/script.js"></script>
 </head>
 <body>
-<div th:replace="~{footer/navbar :: basic-navbar}"></div>
+<div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <div class="container">
     <div class="info-text">
         <h1>퀴즈 형식을 설정해주세요</h1>

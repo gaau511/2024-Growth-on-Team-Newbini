@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="/file-upload/style.css" />
 </head>
 <body>
-<div th:replace="~{footer/navbar :: basic-navbar}"></div>
+<div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <!--<nav class="menu">-->
 <!--  <div class="character">-->
 <!--    <img src="/file-upload/images/logo.png" alt="Logo" />-->

@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<div th:replace="~{footer/navbar :: basic-navbar}"></div>
+<div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <div class="quiz-container">
     <div th:each="question, iterStat : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">

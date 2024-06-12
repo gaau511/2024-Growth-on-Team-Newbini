@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<footer th:fragment="basic-navbar">
-    <header class="navbar">
+<footer th:fragment="basic-navbar (loginMember)">
+    <header th:if="${loginMember == null}" class="navbar">
         <link rel="stylesheet" th:href="@{/home/style.css}" />
         <div class="nav-container">
             <div class="logo">
@@ -19,10 +19,7 @@
             </nav>
         </div>
     </header>
-</footer>
-
-<footer th:fragment="login-navbar">
-    <header class="navbar">
+    <header th:if="${loginMember != null}" class="navbar">
         <link rel="stylesheet" th:href="@{/home/style.css}" />
         <div class="nav-container">
             <div class="logo">
@@ -37,5 +34,6 @@
         </div>
     </header>
 </footer>
+
 </body>
 </html>
