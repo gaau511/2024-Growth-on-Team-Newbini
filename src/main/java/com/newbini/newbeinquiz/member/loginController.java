@@ -35,9 +35,8 @@ public class loginController {
 
             if (findMember.get().getPassword().equals(member.getPassword())) {
                 // 로그인 성공
-                String sessionId = UUID.randomUUID().toString();
                 HttpSession session = request.getSession();
-                session.setAttribute("loginMember", member);
+                session.setAttribute("loginMember", findMember.get());
             }
             else {
                 throw new Exception("Wrong password");
