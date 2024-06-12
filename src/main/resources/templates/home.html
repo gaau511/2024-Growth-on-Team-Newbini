@@ -1,25 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizard!</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/home/style.css">
 </head>
 <body>
-<header class="navbar">
-    <div class="nav-container">
-        <div class="logo">
-            <a href="/">
-                <img src="images/logo.svg" alt="Logo">
-            </a>
-        </div>
-        <nav class="menu">
-            <a href="/sign-in" class="login">로그인</a>
-            <a href="/sign-up" class="signup">회원가입</a>
-        </nav>
-    </div>
-</header>
+<div th:replace="~{footer/navbar :: basic-navbar}"></div>
 <main>
     <div class="content">
         <img src="images/wizard.svg" alt="Wizard" class="wizard-image">
