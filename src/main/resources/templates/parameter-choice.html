@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>문제 유형 및 난이도 선택</title>
@@ -7,9 +7,12 @@
     <script src="/parameter-choice/script.js"></script>
 </head>
 <body>
+<div th:replace="~{footer/navbar :: basic-navbar}"></div>
 <div class="container">
-    <h1>퀴즈 형식을 설정해주세요</h1>
-    <div>
+    <div class="info-text">
+        <h1>퀴즈 형식을 설정해주세요</h1>
+    </div>
+    <div class="type-text">
         <h3>문제 유형</h3>
     </div>
     <div class="problem-type">
@@ -18,7 +21,7 @@
         <button onclick="toggleProblemType(this)">주관식</button>
         <button onclick="toggleProblemType(this)">서술형</button>
     </div>
-    <div>
+    <div class="difficulty-text">
         <h3>난이도</h3>
     </div>
     <div class="difficulty">
@@ -30,7 +33,7 @@
         <input type="hidden" name="problem_types" id="problem_types">
         <input type="hidden" name="difficulty" id="difficulty">
     </form>
-    <button class="submit" onclick="submitForm()">제출</button>
+    <button class="submit-btn" onclick="submitForm()">제출</button>
 </div>
 </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="basic-navbar">
+    <header class="navbar">
+        <link rel="stylesheet" th:href="@{/styles.css}" />
+        <div class="nav-container">
+            <div class="logo">
+                <a href="Landing Page.html">
+                    <img th:src="@{/images/logo.svg}" alt="Logo">
+                </a>
+            </div>
+            <nav class="menu">
+                <a href="/login" class="login">로그인</a>
+                <a href="/signup" class="signup">회원가입</a>
+            </nav>
+        </div>
+    </header>
+</footer>
+</body>
+</html>
