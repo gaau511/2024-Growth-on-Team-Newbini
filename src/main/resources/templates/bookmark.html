@@ -8,6 +8,7 @@
 
 </head>
 <body>
+<div th:replace="~{footer/navbar :: basic-navbar}"></div>
 <div class="quiz-container">
     <div th:each="question : ${quiz.questions}">
         <div class="question">
@@ -15,7 +16,6 @@
             <div th:class="answer">
                 <span th:text="|정답 : ${question.answer}|">정답</span>
             </div>
-            <button class="bookmark-btn">북마크</button>
         </div>
     </div>
 </div>

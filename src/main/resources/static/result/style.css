@@ -1,4 +1,15 @@
 /* CSS 스타일 */
+
+button {
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 20px;
+}
 .quiz-container {
     max-width: 600px;
     margin: 0 auto;
@@ -10,8 +21,8 @@
     background-color: #EEE6FF;
     border: 2px solid #D4BFFF;
     border-radius: 30px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 30px 20px;
+    margin: 20px 0;
 }
 
 .question.correct {
@@ -27,7 +38,7 @@
 .question-text {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .answer-options {
@@ -51,7 +62,7 @@
     background-color: #FFFFFF;
     border-radius: 15px;
     padding : 10px;
-    margin : 7px;
+    margin-top : 20px;
 }
 
 .short-answer {
@@ -67,12 +78,19 @@
     display: none;
     position: absolute;
     top: 20px;
-    right: -80px;
-    font-size: 12px;
+    right: -120px;
     color: #333;
     text-decoration: none;
 }
 
 .bookmark-btn:hover {
-    color: #666;
+    background-color: #666;
+}
+
+.submit-btn {
+    background-color: #18A11E;
+}
+
+.submit-btn:hover {
+    background-color: #365738;
 }

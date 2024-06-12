@@ -9,6 +9,7 @@
 
 </head>
 <body>
+<div th:replace="~{footer/navbar :: basic-navbar}"></div>
 <div class="quiz-container">
     <div th:each="question, iterStat : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">
@@ -51,7 +52,7 @@
             <button class="bookmark-btn">북마크</button>
         </div>
     </div>
-    <button id="submit-button">채점하기</button>
+    <button id="submit-button" class="submit-btn">채점하기</button>
 </div>
 
 <script th:inline="javascript">
