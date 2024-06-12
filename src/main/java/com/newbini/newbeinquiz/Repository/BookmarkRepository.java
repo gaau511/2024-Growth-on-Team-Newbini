@@ -25,4 +25,8 @@ public class BookmarkRepository {
         log.info("Bookmark success");
         log.info("Bookmark = {}", store);
     }
+
+    public List<QuizForm.Question> findQuiz(UUID uuid) {
+        return store.get(uuid);
+    }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet"
+          href="../static/bookmark/style.css" th:href="@{/bookmark/style.css}" />
+
+</head>
+<body>
+<div class="quiz-container">
+    <div th:each="question : ${quiz.questions}">
+        <div class="question">
+            <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${question.question}"></h3>
+            <div th:class="answer">
+                <span th:text="|정답 : ${question.answer}|">정답</span>
+            </div>
+            <button class="bookmark-btn">북마크</button>
+        </div>
+    </div>
+</div>
