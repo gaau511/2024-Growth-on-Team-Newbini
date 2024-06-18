@@ -1,0 +1,77 @@
+/* CSS 스타일 */
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.question {
+    position: relative;
+    background-color: #EEE6FF;
+    border: 2px solid #D4BFFF;
+    border-radius: 30px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.question.correct {
+    background-color: #CEFFC4;
+    border: 2px solid #93FF7D;
+}
+
+.question.incorrect {
+    background-color: #FFE4E0;
+    border: 2px solid #FF7361;
+}
+
+.question-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.answer-options {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.answer-options li {
+    margin : 5px;
+    margin-bottom: 5px;
+}
+
+.answer-options input[type="radio"] {
+    margin : 5px;
+    margin-right: 5px;
+}
+
+.answer {
+    display: none;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding : 10px;
+    margin : 7px;
+}
+
+.short-answer {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.bookmark-btn {
+    position: absolute;
+    top: 20px;
+    right: -80px;
+    font-size: 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.bookmark-btn:hover {
+    color: #666;
+}

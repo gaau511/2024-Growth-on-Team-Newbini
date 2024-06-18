@@ -22,13 +22,12 @@ public class ResultController {
     private final TemporalQuizRepository temporalQuizRepository;
 
 
-// TODO 얘 원상복구 시키기
-//    @GetMapping
-//    public String showResult() {
-//        return "result";
-//    }
-
     @GetMapping
+    public String showResult() {
+        return "result";
+    }
+
+//    @GetMapping
     public String tempShowResult(Model model,
                                  @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
         QuizForm quiz = makeMockQuiz();
@@ -46,7 +45,7 @@ public class ResultController {
         tempOptionList.add("오답");
         QuizForm.Question question1 = new QuizForm.Question("객관식","첫번째 객관식 질문", "정답", tempOptionList);
         QuizForm.Question question2 = new QuizForm.Question("O/X","두번째 OX 질문", "O", null);
-        QuizForm.Question question3 = new QuizForm.Question("주관식","세번째 주관식 질문", "그럴수도 아닐수도 있다.", null);
+        QuizForm.Question question3 = new QuizForm.Question("주관식","세번째 주관식 질문", "Claude", null);
         List<QuizForm.Question> questions = new ArrayList<>();
         questions.add(question1);
         questions.add(question2);
