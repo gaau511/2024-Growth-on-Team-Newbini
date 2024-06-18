@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,16 +7,17 @@
   <link rel="stylesheet" href="/file-upload/style.css" />
 </head>
 <body>
-<nav class="menu">
-  <div class="character">
-    <img src="/file-upload/images/logo.png" alt="Logo" />
-  </div>
-  <div class="nav-buttons">
-    <a href="#" class="nav-list timeline">기록</a>
-    <a href="#" class="nav-list reviewnotes">오답노트</a>
-    <a href="#" class="nav-list settings">설정</a>
-  </div>
-</nav>
+<div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
+<!--<nav class="menu">-->
+<!--  <div class="character">-->
+<!--    <img src="/file-upload/images/logo.png" alt="Logo" />-->
+<!--  </div>-->
+<!--  <div class="nav-buttons">-->
+<!--    <a href="#" class="nav-list timeline">기록</a>-->
+<!--    <a href="/bookmark" class="nav-list reviewnotes">북마크</a>-->
+<!--    <a href="#" class="nav-list settings">설정</a>-->
+<!--  </div>-->
+<!--</nav>-->
 <main>
   <div class="container">
     <div id="loading-page">

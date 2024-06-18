@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<footer th:fragment="basic-navbar (loginMember)">
+    <header th:if="${loginMember == null}" class="navbar">
+        <link rel="stylesheet" th:href="@{/home/style.css}" />
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/">
+                    <img th:src="@{/home/images/logo.svg}" alt="Logo">
+                </a>
+            </div>
+            <nav class="menu">
+                <a href="/sign-in" class="login">로그인</a>
+                <a href="/sign-up" class="signup">회원가입</a>
+            </nav>
+        </div>
+    </header>
+    <header th:if="${loginMember != null}" class="navbar">
+        <link rel="stylesheet" th:href="@{/home/style.css}" />
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/">
+                    <img th:src="@{/home/images/logo.svg}" alt="Logo">
+                </a>
+            </div>
+            <nav class="menu">
+                <a href="/bookmark" class="login">북마크</a>
+                <a href="/logout" class="signup">로그아웃</a>
+            </nav>
+        </div>
+    </header>
+</footer>
+
+</body>
+</html>

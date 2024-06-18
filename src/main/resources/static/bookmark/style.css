@@ -1,0 +1,26 @@
+.quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+
+.question {
+    position: relative;
+    background-color: #EEE6FF;
+    border: 2px solid #D4BFFF;
+    border-radius: 30px;
+    padding: 30px 20px;
+    margin: 20px 0;
+}
+
+.question-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.answer {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding : 10px;
+    margin-top : 20px;
+}

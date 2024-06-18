@@ -1,0 +1,170 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Pretendard";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.character {
+  display: inline-block;
+  margin-right: 2vw; /* 간격을 좁힘 */
+}
+
+.nav-list {
+  display: inline-block;
+  margin-right: 2vw; /* 간격을 좁힘 */
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0.4vw;
+  font-weight: 700;
+  font-size: 1.5vw; /* 글자 크기 줄임 */
+  color: #000000;
+  text-decoration: none;
+}
+
+.logo {
+  position: absolute;
+  width: 20vw;
+  height: 7.5vw;
+  left: 5vw;
+  top: 5vw;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  padding: 2vw 5vw;
+  gap: 3vw; /* 버튼 사이의 간격을 설정 */
+}
+
+.container {
+  width: 90vw;
+  height: 70vh;
+  background: rgb(255, 255, 255);
+  text-align: center;
+  overflow: auto;
+  margin-top: 10vh;
+}
+
+.character {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vw;
+}
+
+.character img {
+  max-width: 10vw;
+  height: auto;
+}
+
+.pointer-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2vw;
+}
+
+.pointer {
+  width: 5vw; /* 원하는 크기로 조절 */
+  margin-right: 1vw;
+}
+
+.file-upload-container {
+  text-align: center;
+  margin-top: 5vw;
+}
+
+.file-upload-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vw;
+}
+
+.drop-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80vw;
+  max-width: 800px; /* 최대 너비 설정 */
+  height: 50vh;
+  max-height: 550px; /* 최대 높이 설정 */
+  border: 0.2vw dashed #ccc;
+  border-radius: 1vw;
+  margin: 2vw auto;
+  position: relative;
+  padding: 2vw;
+  text-align: center;
+  cursor: pointer;
+}
+
+.drop-box.hover {
+  border-color: blue;
+}
+
+.drop-box img {
+  width: 40vw; /* 이미지 크기를 줄임 */
+  max-width: 400px; /* 최대 너비 설정 */
+}
+
+.confirm-button {
+  display: block;
+  margin: 2vw auto;
+  padding: 1vw 2vw;
+  background-color: grey;
+  color: white;
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+}
+
+.confirm-button.active {
+  background-color: purple;
+}
+
+.uploaded-files {
+  margin-top: 2vw;
+}
+
+.upload-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+ .loading-image {
+            position: absolute;
+            left: 607px;
+            top: 165px;
+ }
+
+.notice-image {
+    position: absolute;
+    left: 510px;
+    top: 572px;
+}
+
+#loading-page {
+        display: none;
+}
+
+#upload-page {
+        display: block;
+}

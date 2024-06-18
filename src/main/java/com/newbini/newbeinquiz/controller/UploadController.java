@@ -8,6 +8,10 @@ import com.newbini.newbeinquiz.dto.request.QuizForm;
 import com.newbini.newbeinquiz.dto.response.AssistantObject;
 import com.newbini.newbeinquiz.dto.response.MessageObject;
 import com.newbini.newbeinquiz.dto.response.ThreadObject;
+import com.newbini.newbeinquiz.member.Member;
+import com.newbini.newbeinquiz.member.TemporalQuizRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
@@ -35,6 +39,8 @@ public class UploadController {
     @Value("${openai.api.key}")
     private String key;
 
+    private final TemporalQuizRepository temporalQuizRepository;
+
 
     private String type;
     private String difficulty;
@@ -56,7 +62,9 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files, RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
+    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files,
+                                   @SessionAttribute(name = "loginMember", required = false) Member loginMember,
+                                   RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
         audioHandler = new AudioHandler(uploadDir, key);
 
         /**
@@ -68,6 +76,12 @@ public class UploadController {
         String answer = RunExecuteSequence(fileListForAttach);
 
         QuizForm quiz = objectMapper.readValue(answer, QuizForm.class);
+
+        // 회원정보 꺼내기
+        if (loginMember != null) {
+            temporalQuizRepository.storeQuiz(loginMember.getUuid(), quiz);
+        }
+
         redirectAttributes.addFlashAttribute("quiz", quiz);
 
         return "redirect:/result";

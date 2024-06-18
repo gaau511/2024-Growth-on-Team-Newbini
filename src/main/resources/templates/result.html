@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz</title>
-    <link rel="stylesheet" href="/result/style.css" />
+    <link rel="stylesheet"
+          href="../static/result/style.css" th:href="@{/result/style.css}" />
 
 </head>
 <body>
+<div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <div class="quiz-container">
     <div th:each="question, iterStat : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">
             <div th:case="'객관식'" class="multiple">
-                    <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                    <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                     <ul class="answer-options multiple" >
                         <li th:each="option, optionStat : ${question.options}">
                             <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
@@ -35,11 +37,11 @@
                 <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
                 <ul class="answer-options">
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="true" />
+                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="O" />
                         <label th:for="${'q' + iterStat.count + '-true'}">O</label>
                     </li>
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="false" />
+                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="X" />
                         <label th:for="${'q' + iterStat.count + '-false'}">X</label>
                     </li>
                 </ul>
@@ -47,12 +49,32 @@
                     <span th:text="|정답 : ${question.answer}|">정답</span>
                 </div>
             </div>
+            <button class="bookmark-btn">북마크</button>
         </div>
     </div>
-    <button id="submit-button">채점하기</button>
+    <button id="submit-button" class="submit-btn">채점하기</button>
 </div>
 
 <script th:inline="javascript">
+
+    const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
+    bookmarkButtons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                 fetch(`/bookmark?index=${index}`, {
+                    method: 'POST',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("북마크 되었습니다.");
+                    } else {
+                        alert("북마크에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                 });
+            });
+        });
 
     document.getElementById('submit-button').addEventListener('click', function() {
 
@@ -106,6 +128,8 @@
                 var selectedOption = question.querySelector('input[type="radio"]:checked');
                 if (selectedOption) {
                     const userAnswer = selectedOption.value;
+                    console.log("user" + userAnswer);
+                    console.log("answer" + answer);
                     if (userAnswer === answer) {
                     score++;
                     question.classList.add('correct');
@@ -118,17 +142,12 @@
                 }
                 break;
         }
-
-        const button = document.createElement('button');
-        button.textContent = '북마크';
-        button.classList.add('bookmark-btn');
-
-        button.addEventListener('click', function() {
-            alert('북마크 되었습니다.');
         });
 
-        question.appendChild(button);
+        document.querySelectorAll('.bookmark-btn').forEach(function(element) {
+            element.style.display = 'flex';
         });
+
 
         document.querySelectorAll('.answer').forEach(function(element) {
             element.style.display = 'flex';
