@@ -1,5 +1,6 @@
 package com.newbini.newbeinquiz.api;
 
+import com.newbini.newbeinquiz.dto.response.ListAssistantsObject;
 import com.newbini.newbeinquiz.dto.response.MessageObject;
 import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import org.junit.jupiter.api.Test;

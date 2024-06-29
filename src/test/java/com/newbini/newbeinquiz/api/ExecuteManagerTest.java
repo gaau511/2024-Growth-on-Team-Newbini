@@ -1,6 +1,7 @@
 package com.newbini.newbeinquiz.api;
 
 import com.newbini.newbeinquiz.dto.response.AssistantObject;
+import com.newbini.newbeinquiz.dto.response.ListAssistantsObject;
 import com.newbini.newbeinquiz.dto.response.MessageObject;
 import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import org.apache.tomcat.util.json.ParseException;

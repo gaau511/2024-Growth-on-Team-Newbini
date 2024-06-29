@@ -3,6 +3,7 @@ package com.newbini.newbeinquiz.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.newbeinquiz.dto.response.FileObject;
+import com.newbini.newbeinquiz.dto.response.ListAssistantsObject;
 import com.newbini.newbeinquiz.dto.response.MessageObject;
 import lombok.Getter;
 import org.springframework.core.io.FileSystemResource;

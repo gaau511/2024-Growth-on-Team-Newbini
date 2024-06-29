@@ -22,7 +22,10 @@ public class AssistantObject {
     private double top_p;
     private double temperature;
     private ToolResources tool_resources;
-    private String response_format;
+
+    // response_format의 type은 String or Object 가 될 수 있음
+    private Object response_format;
+
 
     @Data
     public static class Tool {
@@ -39,8 +42,5 @@ public class AssistantObject {
         private List<String> vector_store_ids;
     }
 
-    @Data
-    private static class Format {
-        private String type;
-    }
+
 }
