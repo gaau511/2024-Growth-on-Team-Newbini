@@ -1,14 +1,12 @@
 package com.newbini.newbeinquiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newbini.newbeinquiz.api.AssistantDeleteManager;
 import com.newbini.newbeinquiz.api.AssistantGenerator;
 import com.newbini.newbeinquiz.api.ExecuteManager;
 import com.newbini.newbeinquiz.api.MessageGenerator;
 import com.newbini.newbeinquiz.dto.request.QuizForm;
-import com.newbini.newbeinquiz.dto.response.AssistantObject;
-import com.newbini.newbeinquiz.dto.response.ListAssistantsObject;
-import com.newbini.newbeinquiz.dto.response.MessageObject;
-import com.newbini.newbeinquiz.dto.response.ThreadObject;
+import com.newbini.newbeinquiz.dto.response.*;
 import com.newbini.newbeinquiz.member.Member;
 import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
@@ -125,7 +123,12 @@ public class UploadController {
         String answer = execute.run(thread_id, assistant_id);
         log.info("run success");
 
-        // 5. get answer
+        AssistantDeleteManager assistantDeleteManager = new AssistantDeleteManager(key);
+        //5. delete assistant
+        DeleteAssistantObject delete = assistantDeleteManager.deleteAssistant(assistant_id);
+        log.info("assistant deleted");
+
+        // 6. return answer
         return answer;
     }
 
