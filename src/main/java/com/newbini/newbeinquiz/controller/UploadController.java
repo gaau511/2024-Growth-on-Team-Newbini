@@ -12,6 +12,7 @@ import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,37 +29,31 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping
 public class UploadController {
-    ObjectMapper objectMapper;
-    AssistantGenerator assistant;
 
-    @Value("${file.dir}")
-    private String uploadDir;
-
+    String uploadDir = "C:/Users/82109/Desktop/Newbini/src/main/resources/files/";
+    String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+    private final ObjectMapper objectMapper;
+    private final AssistantGenerator assistant;
 
     private final TemporalQuizRepository temporalQuizRepository;
-
-
-    private String type;
-    private String difficulty;
-
     /**
      * When an AudioFile is input,
      * it must be transcribed through an audio handler.
      */
     private AudioHandler audioHandler;
 
+    private String type;
+    private String difficulty;
+
     @GetMapping("/upload")
-    public String uploadForm( @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
-                              @RequestParam(value = "difficulty", defaultValue = "보통") String difficulty) {
-
-        this.type = type;
-        this.difficulty = difficulty;
-
+    public String uploadForm() {
         return "file-upload";
     }
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files,
+                                   @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
+                                   @RequestParam(value = "difficulty", defaultValue = "보통") String difficulty,
                                    @SessionAttribute(name = "loginMember", required = false) Member loginMember,
                                    RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
         audioHandler = new AudioHandler(uploadDir, key);
@@ -91,18 +86,15 @@ public class UploadController {
     private String RunExecuteSequence(List<File> fileListForAttach) throws ParseException, IOException, InterruptedException {
 
         // 1. create assitant
-
         AssistantObject createdAssistant = assistant.createAssistant(type, difficulty);
         log.debug("assistant : {}", createdAssistant);
         log.info("createAssistant success");
-
         String assistant_id = createdAssistant.getId();
 
         // 2. create thread
         ThreadObject thread = assistant.createThread();
         log.debug("thread : {}", thread);
         log.info("createThread success");
-
         String thread_id = thread.getId();
 
         MessageGenerator message = new MessageGenerator(key, fileListForAttach);

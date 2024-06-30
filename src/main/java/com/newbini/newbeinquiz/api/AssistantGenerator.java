@@ -7,8 +7,10 @@ import com.newbini.newbeinquiz.dto.response.AssistantObject;
 import com.newbini.newbeinquiz.dto.response.DeleteAssistantObject;
 import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import com.newbini.newbeinquiz.dto.response.VectorStoreObject;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -16,20 +18,24 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-// TODO 무상태로 설계하기
-@Component
-@RequiredArgsConstructor
+@Slf4j
 public class AssistantGenerator {
-
     private final String openAiApiKey;
     private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
+    private HttpHeaders headers;
 
-    HttpHeaders headers = OpenAIBasicHeaderConst.basicHeader(openAiApiKey);
+    public AssistantGenerator(String openAiApiKey, RestTemplate restTemplate) {
+        this.openAiApiKey = openAiApiKey;
+        this.restTemplate = restTemplate;
+    }
+
+    @PostConstruct
+    public void initialize() {
+        this.headers = OpenAIBasicHeaderConst.basicHeader(openAiApiKey);
+    }
+
 
     public AssistantObject createAssistant(String type, String difficulty) {
-
-        HttpHeaders headers = OpenAIBasicHeaderConst.basicHeader(openAiApiKey);
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("instructions", AssistantInstructionConst.createInstruction(type, difficulty));
         requestBody.put("name", "Quizard");
@@ -47,12 +53,17 @@ public class AssistantGenerator {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        return restTemplate.exchange(
+        log.info("request = {}", requestEntity);
+
+        ResponseEntity<AssistantObject> response = restTemplate.exchange(
                 "https://api.openai.com/v1/assistants",
                 HttpMethod.POST,  // HTTP 메소드
                 requestEntity,
                 AssistantObject.class
-        ).getBody();
+        );
+        log.info("response = {}", response);
+
+        return response.getBody();
 
     }
 
