@@ -28,13 +28,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping
 public class UploadController {
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper;
+    AssistantGenerator assistant;
 
     @Value("${file.dir}")
     private String uploadDir;
 
-    @Value("${openai.api.key}")
-    private String key;
 
     private final TemporalQuizRepository temporalQuizRepository;
 
@@ -92,7 +91,6 @@ public class UploadController {
     private String RunExecuteSequence(List<File> fileListForAttach) throws ParseException, IOException, InterruptedException {
 
         // 1. create assitant
-        AssistantGenerator assistant = new AssistantGenerator(key);
 
         AssistantObject createdAssistant = assistant.createAssistant(type, difficulty);
         log.debug("assistant : {}", createdAssistant);
