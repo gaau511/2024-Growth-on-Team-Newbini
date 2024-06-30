@@ -18,16 +18,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+@Component
+@RequiredArgsConstructor
 @Slf4j
 public class AssistantGenerator {
     private final String openAiApiKey;
     private final RestTemplate restTemplate;
     private HttpHeaders headers;
-
-    public AssistantGenerator(String openAiApiKey, RestTemplate restTemplate) {
-        this.openAiApiKey = openAiApiKey;
-        this.restTemplate = restTemplate;
-    }
 
     @PostConstruct
     public void initialize() {

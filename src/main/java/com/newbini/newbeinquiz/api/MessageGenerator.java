@@ -22,7 +22,6 @@ import java.util.*;
 public class MessageGenerator {
 
     private final String openAiApiKey;
-
     private final RestTemplate restTemplate = new RestTemplate();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private List<String> attachments = new ArrayList<>();

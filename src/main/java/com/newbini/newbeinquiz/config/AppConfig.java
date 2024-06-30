@@ -15,6 +15,11 @@ public class AppConfig {
     @Value("${openai.api.key}")
     private String key;
 
+    @Bean(name = "openAiApiKey")
+    public String getApiKey() {
+        return key;
+    }
+
     @Bean
     public AssistantGenerator assistantGenerator(RestTemplate restTemplate) {
         return new AssistantGenerator(key, restTemplate());
