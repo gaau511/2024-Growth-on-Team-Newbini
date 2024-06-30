@@ -34,6 +34,7 @@ public class UploadController {
     String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
     private final ObjectMapper objectMapper;
     private final AssistantGenerator assistant;
+    private final MessageGenerator message;
 
     private final TemporalQuizRepository temporalQuizRepository;
     /**
@@ -97,12 +98,14 @@ public class UploadController {
         log.info("createThread success");
         String thread_id = thread.getId();
 
-        MessageGenerator message = new MessageGenerator(key, fileListForAttach);
+        // 3. Attach files to Message
+        List<String> fileIdList = message.attachFiles(fileListForAttach);
 
-        // 3. Attach files, create message
-        MessageObject createdMessage = message.createMessage(thread_id);
+        // 4. create message
+        MessageObject createdMessage = message.createMessage(thread_id, fileIdList);
         log.debug("createdMessage : {}", createdMessage);
         log.info("createMessage success");
+
 
         String message_id = createdMessage.getId();
 

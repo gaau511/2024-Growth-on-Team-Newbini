@@ -2,14 +2,19 @@ package com.newbini.newbeinquiz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newbini.newbeinquiz.dto.response.AssistantObject;
 import com.newbini.newbeinquiz.dto.response.FileObject;
 import com.newbini.newbeinquiz.dto.response.ListAssistantsObject;
 import com.newbini.newbeinquiz.dto.response.MessageObject;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -19,26 +24,27 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@Component
+@RequiredArgsConstructor
 public class MessageGenerator {
 
     private final String openAiApiKey;
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RestTemplate restTemplate;
+
+    private HttpHeaders headers;
     private List<String> attachments = new ArrayList<>();
 
-    private List<String> file_ids = new ArrayList<>();
+    @PostConstruct
+    public void initialize() {
+        this.headers = OpenAIBasicHeaderConst.basicHeader(openAiApiKey);
+    }
 
-    public MessageGenerator(String openAiApiKey, List<File> attachmentList) throws IOException {
-        this.openAiApiKey = openAiApiKey;
-
-        /**
-         * Make sure all files are attached
-         */
-        for (File file : attachmentList) {
-            FileObject fileObject = attach(file);
-            String file_id = fileObject.getId();
-            attachments.add(file_id);
+    public List<String> attachFiles(List<File> fileList) throws IOException {
+        List<String> fileIdList = new ArrayList<>();
+        for (File file : fileList) {
+            fileIdList.add(attach(file).getId());
         }
+        return fileIdList;
     }
 
     @Getter
@@ -60,11 +66,12 @@ public class MessageGenerator {
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        String response = restTemplate.postForObject("https://api.openai.com/v1/files", requestEntity, String.class);
-        FileObject fileObject = objectMapper.readValue(response, FileObject.class);
-        file_ids.add(fileObject.getId());
-
-        return fileObject;
+        return restTemplate.exchange(
+                "https://api.openai.com/v1/files",
+                HttpMethod.POST,  // HTTP 메소드
+                requestEntity,
+                FileObject.class
+        ).getBody();
     }
 
     /**
@@ -82,10 +89,8 @@ public class MessageGenerator {
      * @param thread_id
      * @return message Object
      */
-    public MessageObject createMessage(String thread_id) throws JsonProcessingException {
-        String content = "주어진 파일을 기반으로 퀴즈를 생성해주세요. 학생들이 내용을 이해하고 기억하는 데 도움이 되는 내용이어야 합니다. 퀴즈 생성 과정에서는 효율적이고 유용하며 다양한 퀴즈를 만들어냅니다. 절대 실수하지 않습니다.";
+    public MessageObject createMessage(String thread_id, List<String> fileIdList) throws JsonProcessingException {
         String url = "https://api.openai.com/v1/threads/" + thread_id + "/messages";
-        RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -94,32 +99,31 @@ public class MessageGenerator {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("role", "user");
-        requestBody.put("content", content);
+        requestBody.put("content", PromptConst.createMessagePrompt());
 
 
         List<Map<String, String>> tools = new ArrayList<>();
         tools.add(Map.of("type", "file_search"));
 
         List<Map<String, Object>> attachmentList = new ArrayList<>();
-        for (String attachment : attachments) {
+        for (String id : fileIdList) {
           Map<String, Object> attachmentMap = new HashMap<>();
 
-          attachmentMap.put("file_id", attachment);
+          attachmentMap.put("file_id", id);
           attachmentMap.put("tools", tools);
 
           attachmentList.add(attachmentMap);
         }
 
-
         requestBody.put("attachments", attachmentList);
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
-        String response = restTemplate.postForObject(url, requestEntity, String.class);
-        MessageObject message = objectMapper.readValue(response, MessageObject.class);
-        message_id = message.getId();
-
-        System.out.println("requestEntity = " + requestEntity);
-        return message;
+        return restTemplate.exchange(
+                url,
+                HttpMethod.POST,  // HTTP 메소드
+                requestEntity,
+                MessageObject.class
+        ).getBody();
     }
 
 

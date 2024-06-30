@@ -1,17 +1,11 @@
 package com.newbini.newbeinquiz.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newbini.newbeinquiz.config.AppConfig;
 import com.newbini.newbeinquiz.dto.response.AssistantObject;
-import com.newbini.newbeinquiz.dto.response.DeleteAssistantObject;
 import com.newbini.newbeinquiz.dto.response.ThreadObject;
 import com.newbini.newbeinquiz.dto.response.VectorStoreObject;
 import jakarta.annotation.PostConstruct;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.json.ParseException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -34,7 +28,7 @@ public class AssistantGenerator {
 
     public AssistantObject createAssistant(String type, String difficulty) {
         Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("instructions", AssistantInstructionConst.createInstruction(type, difficulty));
+        requestBody.put("instructions", PromptConst.createInstruction(type, difficulty));
         requestBody.put("name", "Quizard");
 
         List<Map<String, Object>> toolsList = new ArrayList<>();
@@ -50,17 +44,12 @@ public class AssistantGenerator {
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        log.info("request = {}", requestEntity);
-
-        ResponseEntity<AssistantObject> response = restTemplate.exchange(
+        return restTemplate.exchange(
                 "https://api.openai.com/v1/assistants",
                 HttpMethod.POST,  // HTTP 메소드
                 requestEntity,
                 AssistantObject.class
-        );
-        log.info("response = {}", response);
-
-        return response.getBody();
+        ).getBody();
 
     }
 

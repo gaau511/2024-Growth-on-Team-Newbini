@@ -1,6 +1,6 @@
 package com.newbini.newbeinquiz.api;
 
-public class AssistantInstructionConst {
+public class PromptConst {
 
     public static String createInstruction(String type, String difficulty) {
         return "저는 학술 콘텐츠 개발자입니다. \n" +
@@ -47,5 +47,9 @@ public class AssistantInstructionConst {
                 "      }\n" +
                 "    ]\n" +
                 "  }";
+    }
+
+    public static String createMessagePrompt() {
+        return "주어진 파일을 기반으로 퀴즈를 생성해주세요. 학생들이 내용을 이해하고 기억하는 데 도움이 되는 내용이어야 합니다. 퀴즈 생성 과정에서는 효율적이고 유용하며 다양한 퀴즈를 만들어냅니다. 절대 실수하지 않습니다.";
     }
 }
