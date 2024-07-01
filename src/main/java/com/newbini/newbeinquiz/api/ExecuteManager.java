@@ -2,44 +2,42 @@ package com.newbini.newbeinquiz.api;
 
 import com.newbini.newbeinquiz.dto.response.ResultObject;
 import com.newbini.newbeinquiz.dto.response.RunObject;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
+@RequiredArgsConstructor
 public class ExecuteManager {
     private final String openAiApiKey;
-    private final RestTemplate restTemplate = new RestTemplate();
-    private String run_id = "";
-    private String thread_id = "";
+    private final RestTemplate restTemplate;
+    private HttpHeaders headers;
 
-    public ExecuteManager(String openAiApiKey) {
-        this.openAiApiKey = openAiApiKey;
+    @PostConstruct
+    public void initialize() {
+        this.headers = OpenAIBasicHeaderConst.basicHeader(openAiApiKey);
     }
 
     /**
      * Run assistant
      */
     public String run(String thread_id, String assistant_id) throws InterruptedException {
-        this.thread_id = thread_id;
-
         String url = "https://api.openai.com/v1/threads/" +thread_id+"/runs";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(openAiApiKey);
-        headers.add("OpenAI-Beta", "assistants=v2");
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("assistant_id", assistant_id);
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        ResponseEntity<RunObject> response = restTemplate.postForEntity(url, requestEntity, RunObject.class);
-        RunObject runObject = response.getBody();
+        RunObject runObject = restTemplate.postForEntity(url, requestEntity, RunObject.class).getBody();
 
-        run_id = runObject.getId();
-        String answer = getAnswer();
+        String run_id = runObject.getId();
+        String answer = getAnswer(thread_id, run_id);
         System.out.println("answer = " + answer);
 
         return answer;
@@ -49,11 +47,11 @@ public class ExecuteManager {
      *When stream == false, we can't use the SSE method,
      * so we retrieve once every second to check if the answer is complete
      */
-    private String getAnswer() throws InterruptedException {
+    private String getAnswer(String thread_id, String run_id) throws InterruptedException {
         while(true) {
             Thread.sleep(1000);
-            if (retrieveRun() == true) {
-                ResultObject result = sendFinalRequest();
+            if (retrieveRun(thread_id, run_id) == true) {
+                ResultObject result = sendFinalRequest(thread_id);
                 String answer = result.getData().get(0).getContent().get(0).getText().getValue();
                 return answer;
             }
@@ -63,7 +61,7 @@ public class ExecuteManager {
     /**
      * After the answer generation is confirmed, call it.
      */
-    private ResultObject sendFinalRequest() {
+    private ResultObject sendFinalRequest(String thread_id) {
         String url = "https://api.openai.com/v1/threads/"+thread_id+"/messages";
 
         HttpHeaders headers = new HttpHeaders();
@@ -79,8 +77,8 @@ public class ExecuteManager {
 
 
 
-    public Boolean retrieveRun() {
-        String url = "https://api.openai.com/v1/threads/"+ this.thread_id +"/runs/" + run_id;
+    public Boolean retrieveRun(String thread_id,String run_id) {
+        String url = "https://api.openai.com/v1/threads/"+ thread_id +"/runs/" + run_id;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(openAiApiKey);

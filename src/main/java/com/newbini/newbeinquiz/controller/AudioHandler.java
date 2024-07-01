@@ -1,25 +1,22 @@
 package com.newbini.newbeinquiz.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 
-
+@Component
+@RequiredArgsConstructor
 public class AudioHandler {
 
-    private String uploadDir;
-    private String openAiApiKey;
-    RestTemplate restTemplate = new RestTemplate();
-
-    public AudioHandler(String uploadDir, String key) {
-        this.uploadDir = uploadDir;
-        this.openAiApiKey = key;
-    }
+    private final String openAiApiKey;
+    private final RestTemplate restTemplate;
 
     /**
      * convert audioFile (audio/*) to textfile(.txt)
@@ -42,8 +39,8 @@ public class AudioHandler {
         //답변 형식 지정
         builder.part("response_format", "text");
 
-        HttpEntity<?> entity = new HttpEntity<>(builder.build(), headers);
-        String body = restTemplate.exchange(url, HttpMethod.POST, entity, String.class).getBody();
+        HttpEntity<?> requestEntity = new HttpEntity<>(builder.build(), headers);
+        String body = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class).getBody();
         return stringToTxtFile(file.getName(), body);
     }
 
@@ -51,10 +48,10 @@ public class AudioHandler {
      * conver string to .txt file
      */
     private File stringToTxtFile(String name, String str) throws IOException {
-        String filePath = uploadDir + "/" + name + "_transcription.txt";
-
-        Path path = Files.write(Paths.get(filePath), str.getBytes(), StandardOpenOption.CREATE);
-        return path.toFile();
+        File tempFile = Files.createTempFile(name, "_transcription.txt").toFile();
+        File txtFile = Files.write(tempFile.toPath(), str.getBytes(), StandardOpenOption.CREATE).toFile();
+        tempFile.deleteOnExit();
+        return txtFile;
     }
 
 }

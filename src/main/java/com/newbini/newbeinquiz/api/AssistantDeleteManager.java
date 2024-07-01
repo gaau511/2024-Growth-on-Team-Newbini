@@ -1,24 +1,24 @@
 package com.newbini.newbeinquiz.api;
 
 import com.newbini.newbeinquiz.dto.response.DeleteAssistantObject;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+@Component
+@RequiredArgsConstructor
 public class AssistantDeleteManager {
-    RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+    private final String openAiApiKey;
 
-    private final String apiKey;
-
-    public AssistantDeleteManager(String key) {
-        this.apiKey = key;
-    }
 
     public DeleteAssistantObject deleteAssistant(String assistant_id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(apiKey);
+        headers.setBearerAuth(openAiApiKey);
         headers.add("OpenAI-Beta", "assistants=v2");
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(headers);
