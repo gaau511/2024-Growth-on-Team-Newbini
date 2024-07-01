@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,21 +31,13 @@ import java.util.List;
 @RequestMapping
 public class UploadController {
 
-    String uploadDir = "C:/Users/82109/Desktop/Newbini/src/main/resources/files/";
     String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
     private final ObjectMapper objectMapper;
     private final AssistantGenerator assistant;
     private final MessageGenerator message;
+    private final AudioHandler audioHandler;
 
     private final TemporalQuizRepository temporalQuizRepository;
-    /**
-     * When an AudioFile is input,
-     * it must be transcribed through an audio handler.
-     */
-    private AudioHandler audioHandler;
-
-    private String type;
-    private String difficulty;
 
     @GetMapping("/upload")
     public String uploadForm() {
@@ -52,20 +45,15 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> files,
+    public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> mfiles,
                                    @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
                                    @RequestParam(value = "difficulty", defaultValue = "보통") String difficulty,
                                    @SessionAttribute(name = "loginMember", required = false) Member loginMember,
                                    RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
-        audioHandler = new AudioHandler(uploadDir, key);
 
-        /**
-         * Make file List to Attach
-         */
-        List<File> fileListForAttach = new ArrayList<>();
-        makeFileAttachList(files, fileListForAttach);
-
-        String answer = RunExecuteSequence(fileListForAttach);
+        // Convert MultiparFiles to Files
+        List<File> fileListForAttach = MultipartToFile(mfiles);
+        String answer = RunExecuteSequence(fileListForAttach, type, difficulty);
 
         QuizForm quiz = objectMapper.readValue(answer, QuizForm.class);
 
@@ -84,7 +72,7 @@ public class UploadController {
      * @param fileListForAttach
      * @return Quiz creation result in jsonString
      */
-    private String RunExecuteSequence(List<File> fileListForAttach) throws ParseException, IOException, InterruptedException {
+    private String RunExecuteSequence(List<File> fileListForAttach, String type, String difficulty) throws IOException, InterruptedException {
 
         // 1. create assitant
         AssistantObject createdAssistant = assistant.createAssistant(type, difficulty);
@@ -105,8 +93,6 @@ public class UploadController {
         MessageObject createdMessage = message.createMessage(thread_id, fileIdList);
         log.debug("createdMessage : {}", createdMessage);
         log.info("createMessage success");
-
-
         String message_id = createdMessage.getId();
 
         ExecuteManager execute = new ExecuteManager(key);
@@ -128,26 +114,29 @@ public class UploadController {
     /**
      * Make FileList for attach and save files in 'resources/files/'
      *
-     * @param files
-     * @param fileListForAttach
+     * @param multipartFiles
+     * @return files
      * @throws IOException
      */
-    private void makeFileAttachList(List<MultipartFile> files, List<File> fileListForAttach) throws IOException {
-        for (MultipartFile file : files) {
-            if (file != null && !file.isEmpty()) {
-                String fileName = file.getOriginalFilename();
-                File dest = new File(uploadDir + fileName);
-                file.transferTo(dest);
+    private List<File> MultipartToFile(List<MultipartFile> multipartFiles) throws IOException {
+        List<File> files = new ArrayList<>();
+        for (MultipartFile mfile : multipartFiles) {
+            if (mfile != null && !mfile.isEmpty()) {
+                File tempFile = Files.createTempFile("temp_",mfile.getOriginalFilename()).toFile();
+                mfile.transferTo(tempFile);
 
                 // if type is audio, convert to TxtFile
-                if (file.getContentType().startsWith("audio")) {
-                    File textFile = audioHandler.audioToText(dest);
-                    fileListForAttach.add(textFile);
+                if (mfile.getContentType().startsWith("audio")) {
+                    File textFile = audioHandler.audioToText(tempFile);
+                    textFile.deleteOnExit();
+                    files.add(textFile);
                 } else {
-                    fileListForAttach.add(dest);
-
+                    files.add(tempFile);
                 }
+                tempFile.deleteOnExit();
             }
         }
+
+        return files;
     }
 }
