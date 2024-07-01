@@ -12,8 +12,6 @@ import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,11 +29,12 @@ import java.util.List;
 @RequestMapping
 public class UploadController {
 
-    String key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
     private final ObjectMapper objectMapper;
     private final AssistantGenerator assistant;
     private final MessageGenerator message;
     private final AudioHandler audioHandler;
+    private final AssistantDeleteManager assistantDeleteManager;
+    private final ExecuteManager execute;
 
     private final TemporalQuizRepository temporalQuizRepository;
 
@@ -51,7 +50,7 @@ public class UploadController {
                                    @SessionAttribute(name = "loginMember", required = false) Member loginMember,
                                    RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
 
-        // Convert MultiparFiles to Files
+        // Convert MultipartFiles to Files
         List<File> fileListForAttach = MultipartToFile(mfiles);
         String answer = RunExecuteSequence(fileListForAttach, type, difficulty);
 
@@ -69,12 +68,17 @@ public class UploadController {
     }
 
     /**
+     *
      * @param fileListForAttach
-     * @return Quiz creation result in jsonString
+     * @param type
+     * @param difficulty
+     * @return
+     * @throws IOException
+     * @throws InterruptedException
      */
     private String RunExecuteSequence(List<File> fileListForAttach, String type, String difficulty) throws IOException, InterruptedException {
 
-        // 1. create assitant
+        // 1. create assistant
         AssistantObject createdAssistant = assistant.createAssistant(type, difficulty);
         log.debug("assistant : {}", createdAssistant);
         log.info("createAssistant success");
@@ -95,14 +99,11 @@ public class UploadController {
         log.info("createMessage success");
         String message_id = createdMessage.getId();
 
-        ExecuteManager execute = new ExecuteManager(key);
         log.info("running start");
-
         //4. run assistant
         String answer = execute.run(thread_id, assistant_id);
         log.info("run success");
 
-        AssistantDeleteManager assistantDeleteManager = new AssistantDeleteManager(key);
         //5. delete assistant
         DeleteAssistantObject delete = assistantDeleteManager.deleteAssistant(assistant_id);
         log.info("assistant deleted");

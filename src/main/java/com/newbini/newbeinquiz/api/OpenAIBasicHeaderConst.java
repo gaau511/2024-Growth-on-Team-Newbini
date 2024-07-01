@@ -1,9 +1,7 @@
 package com.newbini.newbeinquiz.api;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 
 
 public class OpenAIBasicHeaderConst {
