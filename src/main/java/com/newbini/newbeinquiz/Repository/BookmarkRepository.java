@@ -10,23 +10,23 @@ import java.util.*;
 @Repository
 public class BookmarkRepository {
 
-    private final static Map<UUID, List<QuizForm.Question>> store = new HashMap<>();
+    private final static Map<Long, List<QuizForm.Question>> store = new HashMap<>();
 
-    public void add(UUID uuid, QuizForm.Question question) {
-        if (store.containsKey(uuid)) {
-            store.get(uuid).add(question);
+    public void add(Long id, QuizForm.Question question) {
+        if (store.containsKey(id)) {
+            store.get(id).add(question);
         }
         else {
             List<QuizForm.Question> questions = new ArrayList<>();
             questions.add(question);
-            store.put(uuid, questions);
+            store.put(id, questions);
         }
 
         log.info("Bookmark success");
         log.info("Bookmark = {}", store);
     }
 
-    public List<QuizForm.Question> findQuiz(UUID uuid) {
-        return store.get(uuid);
+    public List<QuizForm.Question> findQuiz(Long id) {
+        return store.get(id);
     }
 }

@@ -26,7 +26,7 @@ public class BookmarkController {
                                Model model) {
 
         if (loginMember != null) {
-            List<QuizForm.Question> quizQuestions = bookmarkRepository.findQuiz(loginMember.getUuid());
+            List<QuizForm.Question> quizQuestions = bookmarkRepository.findQuiz(loginMember.getId());
             QuizForm quiz = new QuizForm();
             quiz.setQuestions(quizQuestions);
             model.addAttribute("quiz", quiz);
@@ -43,9 +43,9 @@ public class BookmarkController {
         //result 화면에서 index를 넘겨받음
         //temporal quiz repository에서 해당하는 quiz를 bookmarkRepository로 넘겨주어야 함
         if (loginMember != null) {
-            QuizForm quiz = temporalQuizRepository.findByUuid(loginMember.getUuid()).get();
+            QuizForm quiz = temporalQuizRepository.findById(loginMember.getId()).get();
             QuizForm.Question question = quiz.getQuestions().get(index);
-            bookmarkRepository.add(loginMember.getUuid(), question);
+            bookmarkRepository.add(loginMember.getId(), question);
         }
     }
 }

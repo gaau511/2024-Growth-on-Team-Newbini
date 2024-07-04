@@ -32,7 +32,7 @@ public class ResultController {
                                  @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
         QuizForm quiz = makeMockQuiz();
         if (loginMember != null) {
-            temporalQuizRepository.storeQuiz(loginMember.getUuid(), quiz);
+            temporalQuizRepository.storeQuiz(loginMember.getId(), quiz);
         }
         model.addAttribute("quiz", quiz);
         return "result";

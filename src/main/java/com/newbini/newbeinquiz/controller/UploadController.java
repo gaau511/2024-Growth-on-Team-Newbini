@@ -58,7 +58,7 @@ public class UploadController {
 
         // 회원정보 꺼내기
         if (loginMember != null) {
-            temporalQuizRepository.storeQuiz(loginMember.getUuid(), quiz);
+            temporalQuizRepository.storeQuiz(loginMember.getId(), quiz);
         }
 
         redirectAttributes.addFlashAttribute("quiz", quiz);

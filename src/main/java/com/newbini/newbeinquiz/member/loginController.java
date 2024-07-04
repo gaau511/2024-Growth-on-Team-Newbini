@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class loginController {
 
-    private final MemoryMemberRepository memoryMemberRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/sign-in")
     public String signInForm() {
@@ -27,7 +27,7 @@ public class loginController {
     public String signIn(@ModelAttribute("member") Member member,
                          HttpServletRequest request) throws Exception {
 
-        Optional<Member> findMember = memoryMemberRepository.findByLoginId(member.getLoginId());
+        Optional<Member> findMember = memberRepository.findById(member.getId());
         if (findMember.isPresent()) {
             log.info("findMemberPassword = {}", findMember.get().getPassword());
             log.info("memberPassword = {}", member.getPassword());

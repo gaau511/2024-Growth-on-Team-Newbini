@@ -15,21 +15,21 @@ import java.util.UUID;
 @Repository
 @Slf4j
 public class TemporalQuizRepository {
-    Map<UUID, QuizForm> temporalQuizStore = new HashMap<>();
+    Map<Long, QuizForm> temporalQuizStore = new HashMap<>();
 
-    public void storeQuiz(UUID uuid, QuizForm quiz) {
-        if (temporalQuizStore.containsKey(uuid)) {
-            temporalQuizStore.replace(uuid, quiz);
+    public void storeQuiz(Long id, QuizForm quiz) {
+        if (temporalQuizStore.containsKey(id)) {
+            temporalQuizStore.replace(id, quiz);
         }
         else {
-            temporalQuizStore.put(uuid, quiz);
+            temporalQuizStore.put(id, quiz);
         }
 
         log.info("temporal quiz store success");
         log.info("temporalQuizStore = {}", temporalQuizStore);
     }
 
-    public Optional<QuizForm> findByUuid(UUID uuid) {
-        return Optional.ofNullable(temporalQuizStore.get(uuid));
+    public Optional<QuizForm> findById(Long id) {
+        return Optional.ofNullable(temporalQuizStore.get(id));
     }
 }

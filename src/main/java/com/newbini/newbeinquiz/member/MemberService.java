@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemoryMemberRepository memoryMemberRepository;
+    private final MemberRepository memberRepository;
 
     public Member join(Member member) throws Exception {
-        memoryMemberRepository.save(member);
-        return memoryMemberRepository.findById(member.getId()).get();
+        memberRepository.save(member);
+        return memberRepository.findById(member.getId()).get();
     }
 
 

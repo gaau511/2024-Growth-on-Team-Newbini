@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Slf4j
-@Repository
 @Transactional
 public class JpaMemberRepository implements MemberRepository{
     private final EntityManager em;
