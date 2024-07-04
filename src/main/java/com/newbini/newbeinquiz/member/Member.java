@@ -13,11 +13,7 @@ public class Member {
 
     @Column(name = "login_id", length = 20)
     private String loginId;
-
-    @Column(name = "password", length = 20)
     private String password;
-
-    @Column(name = "name", length = 20)
     private String name;
 
     public Member() {

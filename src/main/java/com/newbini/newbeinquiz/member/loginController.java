@@ -27,7 +27,7 @@ public class loginController {
     public String signIn(@ModelAttribute("member") Member member,
                          HttpServletRequest request) throws Exception {
 
-        Optional<Member> findMember = memberRepository.findById(member.getId());
+        Optional<Member> findMember = memberRepository.findByLoginId(member.getLoginId());
         if (findMember.isPresent()) {
             log.info("findMemberPassword = {}", findMember.get().getPassword());
             log.info("memberPassword = {}", member.getPassword());

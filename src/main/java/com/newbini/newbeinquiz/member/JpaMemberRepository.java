@@ -1,6 +1,7 @@
 package com.newbini.newbeinquiz.member;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,5 +33,13 @@ public class JpaMemberRepository implements MemberRepository{
     public Member delete(Member member) {
         em.remove(member);
         return member;
+    }
+
+    @Override
+    public Optional<Member> findByLoginId(String loginId) {
+        String jpql = "SELECT m FROM Member m WHERE m.loginId = :loginId";
+        TypedQuery<Member> query = em.createQuery(jpql, Member.class);
+        query.setParameter("loginId", loginId);
+        return Optional.ofNullable(query.getSingleResult());
     }
 }
