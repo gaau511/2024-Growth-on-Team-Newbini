@@ -9,11 +9,9 @@ import java.util.Optional;
 
 public interface MemberRepository {
     Member save(Member member);
-//    Optional<Member> findById(Long id);
     Optional<Member> findById(Long id);
     Member delete(Member member);
     Optional<Member> findByLoginId(String loginId);
-    //for test
     void deleteAll();
 //    List<Member> findAll();
 }

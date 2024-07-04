@@ -9,9 +9,9 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member join(Member member) throws Exception {
+    public Member join(Member member) {
         memberRepository.save(member);
-        return memberRepository.findById(member.getId()).get();
+        return member;
     }
 
 
