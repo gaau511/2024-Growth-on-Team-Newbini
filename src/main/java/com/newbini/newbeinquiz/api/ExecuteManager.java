@@ -38,7 +38,6 @@ public class ExecuteManager {
 
         String run_id = runObject.getId();
         String answer = getAnswer(thread_id, run_id);
-        System.out.println("answer = " + answer);
 
         return answer;
     }

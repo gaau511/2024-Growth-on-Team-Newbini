@@ -7,11 +7,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemoryMemberRepository memoryMemberRepository;
 
     public Member join(Member member) throws Exception {
-        memberRepository.create(member);
-        return memberRepository.findByLoginId(member.getLoginId()).get();
+        if (existsByLoginId(member.getLoginId())) {
+            throw new Exception("You tried to sign up with a duplicate ID.");
+        }
+
+        memoryMemberRepository.save(member);
+        return memoryMemberRepository.findByLoginId(member.getLoginId()).get();
+    }
+
+    public Boolean existsByLoginId(String loginId) {
+        return memoryMemberRepository.findByLoginId(loginId).isPresent();
     }
 
 

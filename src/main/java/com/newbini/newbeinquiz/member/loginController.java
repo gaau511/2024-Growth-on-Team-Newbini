@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class loginController {
 
-    private final MemberRepository memberRepository;
+    private final MemoryMemberRepository memoryMemberRepository;
 
     @GetMapping("/sign-in")
     public String signInForm() {
@@ -28,7 +27,7 @@ public class loginController {
     public String signIn(@ModelAttribute("member") Member member,
                          HttpServletRequest request) throws Exception {
 
-        Optional<Member> findMember = memberRepository.findByLoginId(member.getLoginId());
+        Optional<Member> findMember = memoryMemberRepository.findByLoginId(member.getLoginId());
         if (findMember.isPresent()) {
             log.info("findMemberPassword = {}", findMember.get().getPassword());
             log.info("memberPassword = {}", member.getPassword());
