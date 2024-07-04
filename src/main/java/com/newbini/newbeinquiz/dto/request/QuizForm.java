@@ -26,7 +26,7 @@ public class QuizForm {
     public static class Question {
         private String type;
         private String question;
-        private Object answer;
+        private String answer;
         private List<String> options = new ArrayList<>();
     }
 }

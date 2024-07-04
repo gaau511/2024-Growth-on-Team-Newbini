@@ -16,7 +16,7 @@ public class Quiz {
     private Long memberId;
 
     @Column(name="quiz_id")
-    private Long quizId;
+    private String quizId;
 
     private String question;
 
@@ -25,4 +25,11 @@ public class Quiz {
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Member member;
+
+    public Quiz(Long memberId, String quizId, String question, String answer) {
+        this.memberId = memberId;
+        this.quizId = quizId;
+        this.question = question;
+        this.answer = answer;
+    }
 }
