@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface MemberRepository {
     Member save(Member member);
 //    Optional<Member> findById(Long id);
-    Optional<Member> findByLoginId(String loginId);
-    Optional<Member> delete(Member member);
+    Optional<Member> findById(Long id);
+    Member delete(Member member);
 //    List<Member> findAll();
 }

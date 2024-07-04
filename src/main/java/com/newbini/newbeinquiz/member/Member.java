@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(name = "login_id", length = 20)
     private String loginId;
