@@ -6,18 +6,17 @@ import java.util.UUID;
 @Data
 public class Member {
     public Member() {
-        this.uuid = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
     public Member(String loginId, String password, String name) {
         this.loginId = loginId;
         this.password = password;
         this.name = name;
-
-        this.uuid = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
-    private UUID uuid;
+    private String id;
     private String loginId;
     private String password;
     private String name;

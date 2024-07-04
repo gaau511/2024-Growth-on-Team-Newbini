@@ -9,14 +9,14 @@ import java.util.UUID;
 
 @Repository
 public class MemoryMemberRepository implements MemberRepository {
-    private static final Map<UUID, Member> store = new HashMap<>();
+    private static final Map<String, Member> store = new HashMap<>();
 
     public Member save(Member member) {
-        return store.put(member.getUuid(), member);
+        return store.put(member.getId(), member);
     }
 
     public Optional<Member> delete(Member member) {
-        return Optional.ofNullable(store.remove(member.getUuid()));
+        return Optional.ofNullable(store.remove(member.getId()));
     }
 
     public Optional<Member> findByLoginId(String loginId) {
