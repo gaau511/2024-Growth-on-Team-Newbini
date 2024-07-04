@@ -42,4 +42,10 @@ public class JpaMemberRepository implements MemberRepository{
         query.setParameter("loginId", loginId);
         return Optional.ofNullable(query.getSingleResult());
     }
+
+    @Override
+    public void deleteAll() {
+        String jpql = "delete from Member";
+        em.createQuery(jpql).executeUpdate();
+    }
 }

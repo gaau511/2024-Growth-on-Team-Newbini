@@ -23,6 +23,7 @@ public class TestDataInit {
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
         log.info("test data init");
+        memberRepository.deleteAll();
         memberRepository.save(new Member("test1","1234", "jenny"));
         memberRepository.save(new Member("test2", "1234", "john"));
         memberRepository.save(new Member("test3", "1234", "jane"));

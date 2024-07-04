@@ -30,4 +30,9 @@ public class MemoryMemberRepository implements MemberRepository {
         return Optional.ofNullable(store.get(id));
     }
 
+    @Override
+    public void deleteAll() {
+        store.clear();
+    }
+
 }
