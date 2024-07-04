@@ -19,4 +19,5 @@ public class JpaConfig {
         return new JpaMemberRepository(em);
     }
 
+
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Slf4j
 @Transactional
-public class JpaMemberRepository implements MemberRepository{
+public class JpaMemberRepository implements MemberRepository {
     private final EntityManager em;
 
     public JpaMemberRepository(EntityManager em) {
