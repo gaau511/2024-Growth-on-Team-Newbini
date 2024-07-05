@@ -4,6 +4,7 @@ create table member (
  login_id varchar(20),
  password varchar(20),
  name varchar(20),
+ latest varchar(255),
  primary key (id)
 );
 

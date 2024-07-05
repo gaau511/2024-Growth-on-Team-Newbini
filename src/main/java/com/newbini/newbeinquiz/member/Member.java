@@ -1,5 +1,6 @@
 package com.newbini.newbeinquiz.member;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.UUID;
@@ -15,6 +16,7 @@ public class Member {
     private String loginId;
     private String password;
     private String name;
+    private String latest = null;
 
     public Member() {
     }

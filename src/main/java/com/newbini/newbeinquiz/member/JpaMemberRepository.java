@@ -3,7 +3,6 @@ package com.newbini.newbeinquiz.member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -41,6 +40,12 @@ public class JpaMemberRepository implements MemberRepository {
         TypedQuery<Member> query = em.createQuery(jpql, Member.class);
         query.setParameter("loginId", loginId);
         return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
+    public void update(Long memberId, String latest) {
+        Member findMember = em.find(Member.class, memberId);
+        findMember.setLatest(latest);
     }
 
     @Override

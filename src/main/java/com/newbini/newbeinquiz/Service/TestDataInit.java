@@ -1,9 +1,7 @@
 package com.newbini.newbeinquiz.Service;
 
 
-import com.newbini.newbeinquiz.member.Member;
 import com.newbini.newbeinquiz.member.MemberRepository;
-import com.newbini.newbeinquiz.member.MemoryMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

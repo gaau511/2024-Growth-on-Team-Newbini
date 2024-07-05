@@ -10,6 +10,7 @@ import com.newbini.newbeinquiz.domain.Quiz;
 import com.newbini.newbeinquiz.dto.request.QuizForm;
 import com.newbini.newbeinquiz.dto.response.*;
 import com.newbini.newbeinquiz.member.Member;
+import com.newbini.newbeinquiz.member.MemberRepository;
 import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ public class UploadController {
     private final AssistantDeleteManager assistantDeleteManager;
     private final ExecuteManager execute;
     private final QuizRepository quizRepository;
+    private final MemberRepository memberRepository;
 
     private final TemporalQuizRepository temporalQuizRepository;
 
@@ -69,6 +71,8 @@ public class UploadController {
                 Quiz quiz = new Quiz(memberId,quizId, question.getQuestion(), question.getAnswer());
                 quizRepository.save(quiz);
             }
+            //member의 latest update
+            memberRepository.update(memberId,quizId);
         }
 
         redirectAttributes.addFlashAttribute("quiz", createdQuiz);
