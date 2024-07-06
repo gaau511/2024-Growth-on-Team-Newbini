@@ -9,10 +9,11 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member join(Member member) throws Exception {
-        memberRepository.create(member);
-        return memberRepository.findByLoginId(member.getLoginId()).get();
+    public Member join(Member member) {
+        memberRepository.save(member);
+        return member;
     }
+
 
 
 }

@@ -10,11 +10,11 @@
 <body>
 <div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <div class="quiz-container">
-    <div th:each="question : ${quiz.questions}">
+    <div th:each="quiz : ${quizList}">
         <div class="question">
-            <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${question.question}"></h3>
+            <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${quiz.question}"></h3>
             <div th:class="answer">
-                <span th:text="|정답 : ${question.answer}|">정답</span>
+                <span th:text="|정답 : ${quiz.answer}|">정답</span>
             </div>
         </div>
     </div>

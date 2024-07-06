@@ -24,9 +24,10 @@ public class QuizForm {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Question {
+        private Integer index;
         private String type;
         private String question;
-        private Object answer;
+        private String answer;
         private List<String> options = new ArrayList<>();
     }
 }

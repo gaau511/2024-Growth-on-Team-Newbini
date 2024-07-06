@@ -1,13 +1,16 @@
 package com.newbini.newbeinquiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.newbini.newbeinquiz.Repository.QuizRepository;
 import com.newbini.newbeinquiz.api.AssistantDeleteManager;
 import com.newbini.newbeinquiz.api.AssistantGenerator;
 import com.newbini.newbeinquiz.api.ExecuteManager;
 import com.newbini.newbeinquiz.api.MessageGenerator;
+import com.newbini.newbeinquiz.domain.Quiz;
 import com.newbini.newbeinquiz.dto.request.QuizForm;
 import com.newbini.newbeinquiz.dto.response.*;
 import com.newbini.newbeinquiz.member.Member;
+import com.newbini.newbeinquiz.member.MemberRepository;
 import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -35,6 +39,8 @@ public class UploadController {
     private final AudioHandler audioHandler;
     private final AssistantDeleteManager assistantDeleteManager;
     private final ExecuteManager execute;
+    private final QuizRepository quizRepository;
+    private final MemberRepository memberRepository;
 
     private final TemporalQuizRepository temporalQuizRepository;
 
@@ -42,6 +48,7 @@ public class UploadController {
     public String uploadForm() {
         return "file-upload";
     }
+
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> mfiles,
@@ -54,14 +61,23 @@ public class UploadController {
         List<File> fileListForAttach = MultipartToFile(mfiles);
         String answer = RunExecuteSequence(fileListForAttach, type, difficulty);
 
-        QuizForm quiz = objectMapper.readValue(answer, QuizForm.class);
+        QuizForm createdQuiz = objectMapper.readValue(answer, QuizForm.class);
 
         // 회원정보 꺼내기
+        // Quiz DB에 저장
         if (loginMember != null) {
-            temporalQuizRepository.storeQuiz(loginMember.getUuid(), quiz);
+            String quizHash= UUID.randomUUID().toString();
+            Long memberId = loginMember.getId();
+            for (QuizForm.Question question : createdQuiz.getQuestions()) {
+                Quiz quiz = new Quiz(memberId, quizHash, question.getIndex(), question.getQuestion(), question.getAnswer());
+                quizRepository.save(quiz);
+            }
+            //member의 latest update
+            loginMember.setLatest(quizHash);
+            memberRepository.save(loginMember);
         }
 
-        redirectAttributes.addFlashAttribute("quiz", quiz);
+        redirectAttributes.addFlashAttribute("quiz", createdQuiz);
 
         return "redirect:/result";
 

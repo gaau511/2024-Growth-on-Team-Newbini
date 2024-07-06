@@ -11,41 +11,41 @@
 <body>
 <div th:replace="~{footer/navbar :: basic-navbar (${loginMember})}"></div>
 <div class="quiz-container">
-    <div th:each="question, iterStat : ${quiz.questions}">
+    <div th:each="question : ${quiz.questions}">
         <div th:switch="${question.type}" class="question">
             <div th:case="'객관식'" class="multiple">
-                    <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                    <h3 class="question-text" text="1. 첫번째 퀴즈는?" th:text="${question.index} + '. ' + ${question.question}"></h3>
                     <ul class="answer-options multiple" >
                         <li th:each="option, optionStat : ${question.options}">
-                            <input type="radio" th:value="${option}" th:id="${'q' + iterStat.count + '-' + optionStat.count}" th:name="${'q' + iterStat.count}"/>
-                            <label th:for="${'q' + iterStat.count + '-' + optionStat.count}" th:text="${option}"></label>
+                            <input type="radio" th:value="${option}" th:id="${'q' + question.index + '-' + optionStat.count}" th:name="${'q' + question.index}"/>
+                            <label th:for="${'q' + question.index + '-' + optionStat.count}" th:text="${option}"></label>
                         </li>
                     </ul>
-                    <div th:class="|answer answer-q${iterStat.count}|">
+                    <div th:class="|answer answer-q${question.index}|">
                         <span th:text="|정답 : ${question.answer}|">정답</span>
                     </div>
             </div>
             <div th:case="'주관식'" class="essay">
-                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                <h3 class="question-text" th:text="${question.index} + '. ' + ${question.question}"></h3>
                 <input type="text" class="short-answer" />
                 <span th:text="${question.answer}" style="display:none;"></span>
-                <div th:class="|answer answer-q${iterStat.count}|">
+                <div th:class="|answer answer-q${question.index}|">
                     <span th:text="|정답 : ${question.answer}|">정답</span>
                 </div>
             </div>
             <div th:case="'O/X'" class="OX">
-                <h3 class="question-text" th:text="${iterStat.count} + '. ' + ${question.question}"></h3>
+                <h3 class="question-text" th:text="${question.index} + '. ' + ${question.question}"></h3>
                 <ul class="answer-options">
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-true'}" th:name="'q' + ${iterStat.count}" value="O" />
-                        <label th:for="${'q' + iterStat.count + '-true'}">O</label>
+                        <input type="radio" th:id="${'q' + question.index + '-true'}" th:name="'q' + ${question.index}" value="O" />
+                        <label th:for="${'q' + question.index + '-true'}">O</label>
                     </li>
                     <li>
-                        <input type="radio" th:id="${'q' + iterStat.count + '-false'}" th:name="'q' + ${iterStat.count}" value="X" />
-                        <label th:for="${'q' + iterStat.count + '-false'}">X</label>
+                        <input type="radio" th:id="${'q' + question.index + '-false'}" th:name="'q' + ${question.index}" value="X" />
+                        <label th:for="${'q' + question.index + '-false'}">X</label>
                     </li>
                 </ul>
-                <div th:class="|answer answer-q${iterStat.count}|">
+                <div th:class="|answer answer-q${question.index}|">
                     <span th:text="|정답 : ${question.answer}|">정답</span>
                 </div>
             </div>
@@ -60,7 +60,7 @@
     const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
     bookmarkButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
-                 fetch(`/bookmark?index=${index}`, {
+                 fetch(`/bookmark?index=${index + 1}`, {
                     method: 'POST',
                 })
                 .then(response => {
