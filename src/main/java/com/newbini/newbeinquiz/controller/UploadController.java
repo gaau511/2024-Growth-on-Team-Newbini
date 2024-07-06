@@ -49,6 +49,7 @@ public class UploadController {
         return "file-upload";
     }
 
+
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("attach_file") List<MultipartFile> mfiles,
                                    @RequestParam(value = "type", defaultValue = "객관식,주관식,O/X") String type,
@@ -68,11 +69,11 @@ public class UploadController {
             String quizId= UUID.randomUUID().toString();
             Long memberId = loginMember.getId();
             for (QuizForm.Question question : createdQuiz.getQuestions()) {
-                Quiz quiz = new Quiz(memberId,quizId, question.getQuestion(), question.getAnswer());
+                Quiz quiz = new Quiz(memberId,quizId, question.getIndex(), question.getQuestion(), question.getAnswer());
                 quizRepository.save(quiz);
             }
             //member의 latest update
-            memberRepository.update(memberId,quizId);
+            memberRepository.updateLatest(memberId,quizId);
         }
 
         redirectAttributes.addFlashAttribute("quiz", createdQuiz);

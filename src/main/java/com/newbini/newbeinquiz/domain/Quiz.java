@@ -18,6 +18,9 @@ public class Quiz {
     @Column(name="quiz_id")
     private String quizId;
 
+    @Column(name="quiz_index")
+    private Integer quizIndex;
+
     private String question;
 
     private String answer;
@@ -26,9 +29,10 @@ public class Quiz {
     @JoinColumn(name = "member_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Member member;
 
-    public Quiz(Long memberId, String quizId, String question, String answer) {
+    public Quiz(Long memberId, String quizId, Integer quizIndex, String question, String answer) {
         this.memberId = memberId;
         this.quizId = quizId;
+        this.quizIndex = quizIndex;
         this.question = question;
         this.answer = answer;
     }

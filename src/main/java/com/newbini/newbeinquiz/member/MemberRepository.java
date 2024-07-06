@@ -12,7 +12,7 @@ public interface MemberRepository {
     Optional<Member> findById(Long id);
     Member delete(Member member);
     Optional<Member> findByLoginId(String loginId);
-    void update(Long memberId, String latest);
+    void updateLatest(Long memberId, String latest);
 
     void deleteAll();
 //    List<Member> findAll();

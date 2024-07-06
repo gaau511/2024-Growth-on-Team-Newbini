@@ -1,6 +1,7 @@
 package com.newbini.newbeinquiz.Service;
 
 
+import com.newbini.newbeinquiz.member.Member;
 import com.newbini.newbeinquiz.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

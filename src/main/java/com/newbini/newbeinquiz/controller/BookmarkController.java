@@ -39,7 +39,7 @@ public class BookmarkController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public void bookmark(@RequestParam("index") Integer index,
-                            @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+                            @SessionAttribute("loginMember") Member loginMember) {
         //result 화면에서 index를 넘겨받음
         //temporal quiz repository에서 해당하는 quiz를 bookmarkRepository로 넘겨주어야 함
         if (loginMember != null) {

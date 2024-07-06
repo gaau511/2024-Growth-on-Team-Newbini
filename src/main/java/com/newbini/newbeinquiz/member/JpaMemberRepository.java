@@ -43,7 +43,7 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
-    public void update(Long memberId, String latest) {
+    public void updateLatest(Long memberId, String latest) {
         Member findMember = em.find(Member.class, memberId);
         findMember.setLatest(latest);
     }
