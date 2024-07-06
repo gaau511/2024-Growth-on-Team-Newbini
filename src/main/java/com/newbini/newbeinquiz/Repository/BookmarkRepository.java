@@ -1,32 +1,13 @@
 package com.newbini.newbeinquiz.Repository;
 
-import com.newbini.newbeinquiz.dto.request.QuizForm;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
+import com.newbini.newbeinquiz.domain.Bookmark;
+import com.newbini.newbeinquiz.domain.Quiz;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-@Slf4j
-@Repository
-public class BookmarkRepository {
+public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    private final static Map<Long, List<QuizForm.Question>> store = new HashMap<>();
-
-    public void add(Long id, QuizForm.Question question) {
-        if (store.containsKey(id)) {
-            store.get(id).add(question);
-        }
-        else {
-            List<QuizForm.Question> questions = new ArrayList<>();
-            questions.add(question);
-            store.put(id, questions);
-        }
-
-        log.info("Bookmark success");
-        log.info("Bookmark = {}", store);
-    }
-
-    public List<QuizForm.Question> findQuiz(Long id) {
-        return store.get(id);
-    }
+    List<Bookmark> findAllByMemberId(Long memberId);
 }

@@ -15,8 +15,8 @@ public class Quiz {
     @Column(name="member_id")
     private Long memberId;
 
-    @Column(name="quiz_id")
-    private String quizId;
+    @Column(name="quiz_hash")
+    private String quizHash;
 
     @Column(name="quiz_index")
     private Integer quizIndex;
@@ -29,9 +29,11 @@ public class Quiz {
     @JoinColumn(name = "member_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Member member;
 
-    public Quiz(Long memberId, String quizId, Integer quizIndex, String question, String answer) {
+    public Quiz() {};
+
+    public Quiz(Long memberId, String quizHash, Integer quizIndex, String question, String answer) {
         this.memberId = memberId;
-        this.quizId = quizId;
+        this.quizHash = quizHash;
         this.quizIndex = quizIndex;
         this.question = question;
         this.answer = answer;

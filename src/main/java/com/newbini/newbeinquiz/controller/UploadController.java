@@ -66,14 +66,15 @@ public class UploadController {
         // 회원정보 꺼내기
         // Quiz DB에 저장
         if (loginMember != null) {
-            String quizId= UUID.randomUUID().toString();
+            String quizHash= UUID.randomUUID().toString();
             Long memberId = loginMember.getId();
             for (QuizForm.Question question : createdQuiz.getQuestions()) {
-                Quiz quiz = new Quiz(memberId,quizId, question.getIndex(), question.getQuestion(), question.getAnswer());
+                Quiz quiz = new Quiz(memberId, quizHash, question.getIndex(), question.getQuestion(), question.getAnswer());
                 quizRepository.save(quiz);
             }
             //member의 latest update
-            memberRepository.updateLatest(memberId,quizId);
+            loginMember.setLatest(quizHash);
+            memberRepository.save(loginMember);
         }
 
         redirectAttributes.addFlashAttribute("quiz", createdQuiz);
