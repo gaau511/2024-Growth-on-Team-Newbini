@@ -1,18 +1,16 @@
 package com.newbini.newbeinquiz.controller;
 
 
-import com.newbini.newbeinquiz.Repository.BookmarkRepository;
-import com.newbini.newbeinquiz.Repository.QuizRepository;
+import com.newbini.newbeinquiz.repository.BookmarkRepository;
+import com.newbini.newbeinquiz.repository.QuizRepository;
 import com.newbini.newbeinquiz.domain.Bookmark;
 import com.newbini.newbeinquiz.domain.Quiz;
-import com.newbini.newbeinquiz.dto.request.QuizForm;
-import com.newbini.newbeinquiz.member.Member;
-import com.newbini.newbeinquiz.member.MemberRepository;
+import com.newbini.newbeinquiz.domain.Member;
+import com.newbini.newbeinquiz.repository.MemberRepository;
 import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 

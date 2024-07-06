@@ -1,5 +1,7 @@
-package com.newbini.newbeinquiz.member;
+package com.newbini.newbeinquiz.controller;
 
+import com.newbini.newbeinquiz.domain.Member;
+import com.newbini.newbeinquiz.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

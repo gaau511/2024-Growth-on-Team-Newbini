@@ -1,9 +1,10 @@
-package com.newbini.newbeinquiz.member;
+package com.newbini.newbeinquiz.controller;
 
+import com.newbini.newbeinquiz.service.TestDataInit;
+import com.newbini.newbeinquiz.domain.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Slf4j
 public class SignUpController {
 
-    private final MemberService memberService;
+    private final TestDataInit.MemberService memberService;
 
     @GetMapping("/sign-up")
     public String signUpForm(@ModelAttribute("member") Member member) {

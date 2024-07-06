@@ -1,6 +1,5 @@
-package com.newbini.newbeinquiz.Interceptor;
+package com.newbini.newbeinquiz.interceptor;
 
-import com.newbini.newbeinquiz.member.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

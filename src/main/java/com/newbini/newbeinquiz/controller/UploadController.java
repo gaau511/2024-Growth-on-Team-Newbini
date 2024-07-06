@@ -1,7 +1,7 @@
 package com.newbini.newbeinquiz.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newbini.newbeinquiz.Repository.QuizRepository;
+import com.newbini.newbeinquiz.repository.QuizRepository;
 import com.newbini.newbeinquiz.api.AssistantDeleteManager;
 import com.newbini.newbeinquiz.api.AssistantGenerator;
 import com.newbini.newbeinquiz.api.ExecuteManager;
@@ -9,8 +9,8 @@ import com.newbini.newbeinquiz.api.MessageGenerator;
 import com.newbini.newbeinquiz.domain.Quiz;
 import com.newbini.newbeinquiz.dto.request.QuizForm;
 import com.newbini.newbeinquiz.dto.response.*;
-import com.newbini.newbeinquiz.member.Member;
-import com.newbini.newbeinquiz.member.MemberRepository;
+import com.newbini.newbeinquiz.domain.Member;
+import com.newbini.newbeinquiz.repository.MemberRepository;
 import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
