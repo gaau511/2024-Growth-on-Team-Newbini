@@ -1,6 +1,5 @@
 package com.newbini.newbeinquiz.domain;
 
-import com.newbini.newbeinquiz.member.Member;
 import jakarta.persistence.*;
 import lombok.Data;
 

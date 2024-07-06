@@ -1,4 +1,4 @@
-package com.newbini.newbeinquiz.Repository;
+package com.newbini.newbeinquiz.repository;
 
 import com.newbini.newbeinquiz.domain.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;

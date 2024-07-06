@@ -1,4 +1,4 @@
-package com.newbini.newbeinquiz.member;
+package com.newbini.newbeinquiz.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;

@@ -1,9 +1,8 @@
-package com.newbini.newbeinquiz.member;
+package com.newbini.newbeinquiz.domain;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.UUID;
 
 @Data
 @Entity
