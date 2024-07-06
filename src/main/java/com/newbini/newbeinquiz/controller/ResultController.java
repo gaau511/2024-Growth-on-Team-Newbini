@@ -19,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ResultController {
 
-    private final TemporalQuizRepository temporalQuizRepository;
 
 
     @GetMapping
