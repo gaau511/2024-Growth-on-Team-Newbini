@@ -7,7 +7,6 @@ import com.newbini.newbeinquiz.domain.Bookmark;
 import com.newbini.newbeinquiz.domain.Quiz;
 import com.newbini.newbeinquiz.domain.Member;
 import com.newbini.newbeinquiz.repository.MemberRepository;
-import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

@@ -53,10 +53,14 @@
         </div>
     </div>
     <button id="submit-button" class="submit-btn">채점하기</button>
+    <button id="copy-question-btn" onclick="clip('q')">문제 복사</button>
+    <button id="copy-answer-btn" onclick="clip('a')">정답 복사</button>
 </div>
 
 <script th:inline="javascript">
 
+    const questions = document.querySelectorAll('.question');
+    const answers = document.querySelectorAll('.answer');
     const bookmarkButtons = document.querySelectorAll('.bookmark-btn');
     bookmarkButtons.forEach((button, index) => {
             button.addEventListener('click', () => {
@@ -78,7 +82,6 @@
 
     document.getElementById('submit-button').addEventListener('click', function() {
 
-        const questions = document.querySelectorAll('.question');
         let answers = [];
         [[${quiz.questions}]].forEach(function(question) {
             answers.push(question.answer);
@@ -156,10 +159,49 @@
         document.querySelectorAll('.short-answer').forEach(function(element) {
             element.disabled = true;
         });
-
-
-
     });
+
+    function clip(cond) {
+        var questionsText = '';
+        var answersText = '';
+
+        [[${quiz.questions}]].forEach(function(question) {
+            var questionText = question.index + '. ' + question.question + '\n';
+            var answerText = question.index + '. ' + question.answer + '\n\n';
+            var optionText = '';
+
+            if (question.type == '객관식') {
+                optionText = '';
+                question.options.forEach(function(option) {
+                    optionText += '[' + option + ']\n';
+                });
+                questionText += optionText;
+            }
+            else if (question.type == 'O/X') {
+                optionText = '[O]\n[X]\n'
+                questionText += optionText;
+            }
+
+            questionText += '\n';
+            questionsText += questionText;
+            answersText += answerText;
+        });
+
+        if (cond == 'q') {
+            navigator.clipboard.writeText(questionsText).then(function() {
+                alert("문제가 복사되었습니다.");
+            }).catch(function(error) {
+                console.error('Failed to copy questions: ', error);
+            });
+        } else {
+            navigator.clipboard.writeText(answersText).then(function() {
+                alert("정답이 복사되었습니다.");
+            }).catch(function(error) {
+                console.error('Failed to copy answers: ', error);
+            });
+        }
+    }
+
 </script>
 </body>
 </html>

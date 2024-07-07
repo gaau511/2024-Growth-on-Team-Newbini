@@ -11,7 +11,6 @@ import com.newbini.newbeinquiz.dto.request.QuizForm;
 import com.newbini.newbeinquiz.dto.response.*;
 import com.newbini.newbeinquiz.domain.Member;
 import com.newbini.newbeinquiz.repository.MemberRepository;
-import com.newbini.newbeinquiz.member.TemporalQuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.json.ParseException;
@@ -42,7 +41,6 @@ public class UploadController {
     private final QuizRepository quizRepository;
     private final MemberRepository memberRepository;
 
-    private final TemporalQuizRepository temporalQuizRepository;
 
     @GetMapping("/upload")
     public String uploadForm() {
