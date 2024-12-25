@@ -28,7 +28,8 @@
    5) 문제 북마크 기능
       
 ### 개발자 정보
-팀명: Newbini
-문의: gaau511@gmail.com
-깃허브: https://github.com/gaau511/2024-Growth-on-Team-Newbini
-Quizard와 함께 학습 효과를 높이세요! 🎓
+* 팀명: Newbini
+* 문의: gaau511@gmail.com
+* 깃허브: https://github.com/gaau511/2024-Growth-on-Team-Newbini
+
+### Quizard와 함께 학습 효과를 높이세요! 🎓
