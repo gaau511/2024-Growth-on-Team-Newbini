@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 class ExecuteManagerTest {
-    String key = "";
+    String key = "possible_key";
     MessageGenerator messageGenerator = new MessageGenerator(key,null);
     AssistantGenerator assistantGenerator = new AssistantGenerator(key);
     ExecuteManager executeManager = new ExecuteManager(key);

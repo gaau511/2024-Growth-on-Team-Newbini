@@ -8,7 +8,7 @@ const title = document.querySelector("#title");
 const chatContainer = document.querySelector("#chat-container");
 
 const apiEndpoint = "https://api.openai.com/v1/files";
-const api_key = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+const api_key = "DZ64I";
 
 
 

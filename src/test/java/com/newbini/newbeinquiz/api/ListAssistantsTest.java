@@ -15,7 +15,7 @@ public class ListAssistantsTest {
 
     TestRestTemplate restTemplate = new TestRestTemplate();
 
-    private String apiKey = "sk-proj-TCl0PADVZBOfOk8dRjSNT3BlbkFJzl62k0eGjBAfRI5DZ64I";
+    private String apiKey = "possible_key";
 
     @Test
     void listAssistants() {
