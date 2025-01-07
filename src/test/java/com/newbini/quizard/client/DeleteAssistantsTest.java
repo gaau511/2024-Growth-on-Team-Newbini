@@ -1,4 +1,4 @@
-package com.newbini.quizard.api;
+package com.newbini.quizard.client;
 
 import com.newbini.quizard.dto.response.ListAssistantsObject;
 import lombok.extern.slf4j.Slf4j;

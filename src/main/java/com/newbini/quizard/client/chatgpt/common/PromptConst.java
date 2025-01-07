@@ -1,4 +1,4 @@
-package com.newbini.quizard.api;
+package com.newbini.quizard.client.chatgpt.common;
 
 public class PromptConst {
 

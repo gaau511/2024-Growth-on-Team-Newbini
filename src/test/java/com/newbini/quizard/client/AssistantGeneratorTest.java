@@ -1,6 +1,7 @@
-package com.newbini.quizard.api;
+package com.newbini.quizard.client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.newbini.quizard.client.chatgpt.assistant.AssistantGenerator;
 import com.newbini.quizard.dto.response.AssistantObject;
 import com.newbini.quizard.dto.response.ThreadObject;
 import com.newbini.quizard.dto.response.VectorStoreObject;

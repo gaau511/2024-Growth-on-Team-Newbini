@@ -1,4 +1,4 @@
-package com.newbini.quizard.api;
+package com.newbini.quizard.client.chatgpt.assistant;
 
 import com.newbini.quizard.dto.response.DeleteAssistantObject;
 import lombok.RequiredArgsConstructor;

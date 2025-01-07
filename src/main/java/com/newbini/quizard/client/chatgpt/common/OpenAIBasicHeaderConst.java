@@ -1,4 +1,4 @@
-package com.newbini.quizard.api;
+package com.newbini.quizard.client.chatgpt.common;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

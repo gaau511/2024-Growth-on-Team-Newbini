@@ -1,7 +1,7 @@
 package com.newbini.quizard.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newbini.quizard.api.AssistantGenerator;
+import com.newbini.quizard.client.chatgpt.assistant.AssistantGenerator;
 import org.springframework.ai.openai.api.OpenAiAudioApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
