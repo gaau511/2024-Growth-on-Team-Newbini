@@ -35,6 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### api-key 관련 info###
-*.properties
