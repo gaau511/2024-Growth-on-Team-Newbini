@@ -1,6 +1,9 @@
 package com.newbini.quizard.client.chatgpt;
 
 import com.newbini.quizard.dto.request.ChatGptAssistantResponse;
+import com.newbini.quizard.dto.response.ChatGptMessageResponse;
+import com.newbini.quizard.dto.response.ChatGptRunResponse;
+import com.newbini.quizard.dto.response.ChatGptThreadResponse;
 import com.newbini.quizard.dto.response.DeleteAssistantObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +56,32 @@ public class ChatGptClient {
                 HttpMethod.DELETE,  // HTTP 메소드
                 requestEntity,
                 ChatGptAssistantResponse.class
+        ).getBody();
+    }
+
+    public ChatGptThreadResponse createThread() {
+        HttpHeaders header = getBasicHeader();
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL,
+                HttpMethod.POST,  // HTTP 메소드
+                requestEntity,
+                ChatGptThreadResponse.class
+        ).getBody();
+    }
+
+    public ChatGptThreadResponse deleteThread(String threadId) {
+        HttpHeaders header = getBasicHeader();
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL + "/" + threadId,
+                HttpMethod.DELETE,
+                requestEntity,
+                ChatGptThreadResponse.class
         ).getBody();
     }
 
