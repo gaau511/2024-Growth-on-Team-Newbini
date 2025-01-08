@@ -1,10 +1,9 @@
 package com.newbini.quizard.client.chatgpt;
 
-import com.newbini.quizard.dto.request.ChatGptAssistantResponse;
+import com.newbini.quizard.dto.response.ChatGptAssistantResponse;
 import com.newbini.quizard.dto.response.ChatGptMessageResponse;
 import com.newbini.quizard.dto.response.ChatGptRunResponse;
 import com.newbini.quizard.dto.response.ChatGptThreadResponse;
-import com.newbini.quizard.dto.response.DeleteAssistantObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
