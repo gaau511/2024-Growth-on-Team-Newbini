@@ -1,12 +1,10 @@
-package com.newbini.quizard.client.chatgpt.assistant;
+package com.newbini.quizard.client.chatgpt;
 
 import com.newbini.quizard.dto.request.ChatGptAssistantResponse;
+import com.newbini.quizard.dto.response.DeleteAssistantObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +41,19 @@ public class ChatGptClient {
                 ChatGptAssistantResponse.class
         ).getBody();
 
+    }
+
+    public ChatGptAssistantResponse deleteAssistant(String assistantId) {
+        HttpHeaders header = getBasicHeader();
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(header);
+
+        return restTemplate.exchange(
+                ASSISTANT_BASE_URL + "/" + assistantId,
+                HttpMethod.DELETE,  // HTTP 메소드
+                requestEntity,
+                ChatGptAssistantResponse.class
+        ).getBody();
     }
 
     private HttpHeaders getBasicHeader() {
