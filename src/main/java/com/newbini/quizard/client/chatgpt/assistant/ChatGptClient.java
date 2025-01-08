@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,7 +26,7 @@ public class ChatGptClient {
     private final RestTemplate restTemplate;
 
     public ChatGptAssistantResponse createAssistant() {
-        HttpHeaders header = OpenAIBasicHeaderConst.getBasicHeader(openAiApiKey);
+        HttpHeaders header = getBasicHeader();
 
         Map<String, Object> body = new HashMap<>();
         body.put("name", NAME);
@@ -43,5 +44,14 @@ public class ChatGptClient {
                 ChatGptAssistantResponse.class
         ).getBody();
 
+    }
+
+    private HttpHeaders getBasicHeader() {
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.setBearerAuth(openAiApiKey);
+        header.add("OpenAI-Beta", "assistants=v2");
+
+        return header;
     }
 }
