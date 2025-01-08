@@ -85,6 +85,38 @@ public class ChatGptClient {
         ).getBody();
     }
 
+    public ChatGptMessageResponse createMessage(String threadId, String content, String role) {
+        HttpHeaders header = getBasicHeader();
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("role", role);
+        body.put("content", content);
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(body, header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL + "/" + threadId + "/messages",
+                HttpMethod.POST,
+                requestEntity,
+                ChatGptMessageResponse.class
+        ).getBody();
+
+    }
+
+    public ChatGptMessageResponse listMessages(String threadId) {
+        HttpHeaders header = getBasicHeader();
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL + "/" + threadId + "/messages",
+                HttpMethod.GET,
+                requestEntity,
+                ChatGptMessageResponse.class
+        ).getBody();
+    }
+
+
     private HttpHeaders getBasicHeader() {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
