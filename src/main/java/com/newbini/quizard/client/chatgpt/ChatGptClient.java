@@ -116,6 +116,36 @@ public class ChatGptClient {
         ).getBody();
     }
 
+    public ChatGptRunResponse createRun(String assistantId, String threadId) {
+        HttpHeaders header = getBasicHeader();
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("assistant_id", assistantId);
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(body, header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL + "/" + threadId + "/runs",
+                HttpMethod.POST,
+                requestEntity,
+                ChatGptRunResponse.class
+                ).getBody();
+    }
+
+    public ChatGptRunResponse retrieveRun(String threadId, String runId) {
+        HttpHeaders header = getBasicHeader();
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(header);
+
+        return restTemplate.exchange(
+                THREAD_BASE_URL + "/" + threadId + "/runs/" + runId,
+                HttpMethod.POST,
+                requestEntity,
+                ChatGptRunResponse.class
+        ).getBody();
+    }
+
+
 
     private HttpHeaders getBasicHeader() {
         HttpHeaders header = new HttpHeaders();
