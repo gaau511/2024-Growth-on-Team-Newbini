@@ -1,6 +1,5 @@
 package com.newbini.quizard.client.chatgpt.assistant;
 
-import com.newbini.quizard.client.chatgpt.common.OpenAIBasicHeaderConst;
 import com.newbini.quizard.client.chatgpt.common.PromptConst;
 import com.newbini.quizard.dto.response.AssistantObject;
 import com.newbini.quizard.dto.response.ThreadObject;

@@ -1,6 +1,5 @@
 package com.newbini.quizard.client.chatgpt.assistant;
 
-import com.newbini.quizard.client.chatgpt.common.OpenAIBasicHeaderConst;
 import com.newbini.quizard.dto.request.ChatGptAssistantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.newbini.quizard.client.chatgpt.common.InstructionConst.*;
+import static com.newbini.quizard.client.chatgpt.ChatGptConst.*;
 
 @Component
 @RequiredArgsConstructor

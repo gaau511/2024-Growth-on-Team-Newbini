@@ -1,6 +1,5 @@
 package com.newbini.quizard.client.chatgpt.thread;
 
-import com.newbini.quizard.client.chatgpt.common.OpenAIBasicHeaderConst;
 import com.newbini.quizard.dto.response.ResultObject;
 import com.newbini.quizard.dto.response.RunObject;
 import jakarta.annotation.PostConstruct;
