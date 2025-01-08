@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ChatGptConst {
     public static final String ASSISTANT_BASE_URL = "https://api.openai.com/v1/assistants";
+    public static final String THREAD_BASE_URL = "https://api.openai.com/v1/threads";
 
     public static final String NAME = "Quizard";
     public static final String MODEL = "gpt-4o";
