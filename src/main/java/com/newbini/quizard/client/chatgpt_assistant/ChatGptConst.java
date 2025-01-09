@@ -1,4 +1,4 @@
-package com.newbini.quizard.client.chatgpt;
+package com.newbini.quizard.client.chatgpt_assistant;
 
 import java.util.List;
 import java.util.Map;

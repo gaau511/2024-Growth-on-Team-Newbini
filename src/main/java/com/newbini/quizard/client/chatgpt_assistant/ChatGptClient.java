@@ -1,4 +1,4 @@
-package com.newbini.quizard.client.chatgpt;
+package com.newbini.quizard.client.chatgpt_assistant;
 
 import com.newbini.quizard.dto.response.ChatGptAssistantResponse;
 import com.newbini.quizard.dto.response.ChatGptMessageResponse;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.newbini.quizard.client.chatgpt.ChatGptConst.*;
+import static com.newbini.quizard.client.chatgpt_assistant.ChatGptConst.*;
 
 @Component
 @RequiredArgsConstructor

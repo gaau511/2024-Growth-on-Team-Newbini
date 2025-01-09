@@ -1,11 +1,7 @@
 package com.newbini.quizard.client;
 
-import com.newbini.quizard.client.chatgpt.assistant.AssistantGenerator;
 import com.newbini.quizard.client.chatgpt.thread.ExecuteManager;
 import com.newbini.quizard.client.chatgpt.message.MessageGenerator;
-import com.newbini.quizard.dto.response.AssistantObject;
-import com.newbini.quizard.dto.response.MessageObject;
-import com.newbini.quizard.dto.response.ThreadObject;
 import org.apache.tomcat.util.json.ParseException;
 import org.junit.jupiter.api.Test;
 
