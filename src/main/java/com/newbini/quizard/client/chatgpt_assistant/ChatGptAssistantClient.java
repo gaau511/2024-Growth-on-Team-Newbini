@@ -13,11 +13,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.newbini.quizard.client.chatgpt_assistant.ChatGptConst.*;
+import static com.newbini.quizard.client.chatgpt_assistant.ChatGptAssistantConst.*;
 
 @Component
 @RequiredArgsConstructor
-public class ChatGptClient {
+public class ChatGptAssistantClient {
 
     @Value("${openai.api.key}")
     private String openAiApiKey;
