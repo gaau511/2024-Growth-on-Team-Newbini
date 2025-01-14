@@ -30,9 +30,6 @@ public class ChatGptClient {
 
     private final OpenAiChatClient openAiChatClient;
 
-    @Value("${spring.ai.openai.api-key}")
-    private String openAiApiKey;
-
     public ResponseEntity<ChatResponse> sendRequest(QuizCreateRequest quizCreateRequest) {
         ChatOptions options = OpenAiChatOptions.builder()
                 .withModel("gpt-4o")
