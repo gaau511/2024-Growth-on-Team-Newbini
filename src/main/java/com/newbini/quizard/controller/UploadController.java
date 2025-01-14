@@ -2,13 +2,10 @@ package com.newbini.quizard.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newbini.quizard.repository.QuizRepository;
-import com.newbini.quizard.client.chatgpt.assistant.AssistantDeleteManager;
-import com.newbini.quizard.client.chatgpt.assistant.AssistantGenerator;
 import com.newbini.quizard.client.chatgpt.thread.ExecuteManager;
 import com.newbini.quizard.client.chatgpt.message.MessageGenerator;
 import com.newbini.quizard.domain.Quiz;
 import com.newbini.quizard.dto.request.QuizForm;
-import com.newbini.quizard.dto.response.*;
 import com.newbini.quizard.domain.Member;
 import com.newbini.quizard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
