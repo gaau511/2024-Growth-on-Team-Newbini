@@ -1,5 +1,5 @@
 <div align="center">
-  ![logo](https://github.com/user-attachments/assets/f5edc384-014d-43f1-abf7-417b353668e3)
+  <img src="https://github.com/user-attachments/assets/f5edc384-014d-43f1-abf7-417b353668e3" alt="quizard_logo" />
   <h1>Quizard!</h1>
 </div>
 
