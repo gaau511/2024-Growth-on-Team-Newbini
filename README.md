@@ -24,8 +24,11 @@ PDF, TXT, 이미지, 음성 파일을 범용적으로 지원하며 강의자료�
 
 
 [**🔗 서비스 데모 영상 바로가기 Click !**](https://youtu.be/LcOwnUa6_d8) 👈 
+
 [**🔗 서비스 소개 영상 바로가기 Click !**](https://drive.google.com/file/d/1Iw4uhom7hTu-1-170YTmh6UGtXFDlA1s/view?usp=sharing) 👈 
-[**🔗 서비스 소개 자료 바로가기 Click !**](https://drive.google.com/file/d/14Yh3V2jCdym73kWRv4Y8fltscfQIYGyS/view?usp=sharing) 👈 
+
+<iframe src="https://drive.google.com/file/d/14Yh3V2jCdym73kWRv4Y8fltscfQIYGyS/view?usp=sharing">
+
 <div id="2"></div>
 
 
