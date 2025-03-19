@@ -1,10 +1,9 @@
-![logo](https://github.com/user-attachments/assets/f5edc384-014d-43f1-abf7-417b353668e3)
-
 <div align="center">
+  ![logo](https://github.com/user-attachments/assets/f5edc384-014d-43f1-abf7-417b353668e3)
   <h1>Quizard!</h1>
 </div>
-## 목차
 
+## 목차
 1. [**웹 서비스 소개**](#1)
 2. [**기술 스택**](#2)
 3. [**주요 기능**](#3)
